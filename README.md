@@ -1,1 +1,1 @@
-# PalletLens
+# PaletteLens

@@ -6960,7 +6960,7 @@
         <div class="dropInner" id="dropZone">
           <div class="dropText" id="dropText">
             <strong>画像をドロップ</strong>
-            <span>PNG / JPEG / WEBP に対応</span>
+            <span>PNG / JPEG / WEBP に対応 ・ Ctrl+V / ⌘V で画像を貼り付け</span>
             <button id="chooseBtn" type="button">画像を選択</button>
           </div>
           <img id="preview" alt="preview" />
@@ -7253,6 +7253,30 @@ resetBtn.onclick = resetUI;
 dropZone.addEventListener('drop', e => {
   const file = e.dataTransfer.files?.[0];
   if(file && file.type.startsWith('image/')) loadImage(file);
+});
+
+// Paste an image directly from the clipboard with Ctrl+V / Cmd+V.
+document.addEventListener('paste', e => {
+  const clipboard=e.clipboardData;
+  if(!clipboard) return;
+
+  let imageFile=null;
+
+  for(const item of clipboard.items || []){
+    if(item.kind==='file' && item.type?.startsWith('image/')){
+      imageFile=item.getAsFile();
+      if(imageFile) break;
+    }
+  }
+
+  if(!imageFile){
+    imageFile=[...(clipboard.files || [])].find(file=>file.type?.startsWith('image/')) || null;
+  }
+
+  if(!imageFile) return;
+
+  e.preventDefault();
+  loadImage(imageFile);
 });
 
 function resetUI(){

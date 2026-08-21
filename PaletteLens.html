@@ -4663,10 +4663,2223 @@
     }
   }
 
+
+  /* =========================================================
+     v83 — click palette swatch to copy HEX
+     ========================================================= */
+
+  .paletteCopySwatch{
+    position:relative !important;
+    display:block !important;
+    width:auto !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    color:inherit !important;
+    text-align:left !important;
+    text-transform:none !important;
+    letter-spacing:normal !important;
+    cursor:pointer !important;
+    appearance:none !important;
+    -webkit-appearance:none !important;
+  }
+
+  .paletteCopySwatch:hover .miniBox{
+    filter:saturate(1.04) brightness(1.015);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.22),
+      0 0 0 1px rgba(94,91,103,.10);
+  }
+
+  .paletteCopySwatch:focus-visible{
+    outline:2px solid var(--detected-accent, var(--blue)) !important;
+    outline-offset:4px !important;
+  }
+
+  .paletteCopySwatch::after{
+    content:attr(data-copy-feedback);
+    position:absolute;
+    top:5px;
+    right:5px;
+    z-index:3;
+    max-width:calc(100% - 10px);
+    padding:3px 5px;
+    background:rgba(255,255,255,.93);
+    border:1px solid rgba(94,91,103,.20);
+    color:var(--ink);
+    font-family:var(--font-mono);
+    font-size:9px;
+    line-height:1.15;
+    letter-spacing:.02em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    pointer-events:none;
+    opacity:0;
+    transform:translateY(-3px);
+    transition:opacity .18s ease, transform .22s cubic-bezier(.22,1,.36,1);
+  }
+
+  .paletteCopySwatch.is-copied::after,
+  .paletteCopySwatch.copy-failed::after{
+    opacity:1;
+    transform:none;
+  }
+
+  .paletteCopySwatch.is-copied .miniBox{
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.56),
+      0 0 0 1px var(--detected-accent, var(--blue));
+  }
+
+  .paletteCopyHint{
+    display:block;
+    margin-top:5px;
+    font-family:var(--font-ui);
+    font-size:var(--fs-xs);
+    line-height:1.35;
+    letter-spacing:.06em;
+    text-transform:none;
+    opacity:.68;
+  }
+
+  .paletteCopyHint > span{
+    opacity:.42;
+    margin:0 .25em;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .paletteCopySwatch::after{
+      transition:none !important;
+    }
+  }
+
+
+  /* =========================================================
+     v84 — role color swatches also copy HEX on click
+     ========================================================= */
+
+  button.roleCopySwatch{
+    position:relative !important;
+    box-sizing:border-box !important;
+    display:block !important;
+    margin:0 !important;
+    padding:0 !important;
+    border-left:0 !important;
+    border-right:0 !important;
+    border-top:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    cursor:pointer !important;
+    appearance:none !important;
+    -webkit-appearance:none !important;
+    color:transparent !important;
+    font-size:0 !important;
+    line-height:0 !important;
+    letter-spacing:0 !important;
+  }
+
+  button.roleCopySwatch:hover{
+    filter:saturate(1.04) brightness(1.015);
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.24) !important;
+  }
+
+  button.roleCopySwatch:focus-visible{
+    outline:2px solid var(--detected-accent, var(--blue)) !important;
+    outline-offset:-4px !important;
+  }
+
+  button.roleCopySwatch::after{
+    content:attr(data-copy-feedback);
+    position:absolute;
+    top:8px;
+    right:8px;
+    z-index:4;
+    padding:4px 6px;
+    background:rgba(255,255,255,.94);
+    border:1px solid rgba(94,91,103,.20);
+    color:var(--ink);
+    font-family:var(--font-mono);
+    font-size:10px;
+    line-height:1.15;
+    font-weight:500;
+    letter-spacing:.02em;
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    transform:translateY(-3px);
+    transition:opacity .18s ease, transform .22s cubic-bezier(.22,1,.36,1);
+  }
+
+  button.roleCopySwatch.is-copied::after,
+  button.roleCopySwatch.copy-failed::after{
+    opacity:1;
+    transform:none;
+  }
+
+  button.roleCopySwatch.is-copied{
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.58) !important;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    button.roleCopySwatch::after{
+      transition:none !important;
+    }
+  }
+
+
+  /* =========================================================
+     v85 — larger ranking numbers with bilingual labels to right
+     ========================================================= */
+
+  .toneAnalysisPanel .rankedAnalysisRow,
+  .impressionPanel .rankedAnalysisRow{
+    display:grid !important;
+    grid-template-columns:30px minmax(108px,145px) minmax(70px,1fr) 44px !important;
+    gap:10px !important;
+    align-items:center !important;
+  }
+
+  .rankingNumber{
+    align-self:center;
+    justify-self:start;
+    min-width:26px;
+    font-family:var(--font-display);
+    font-size:24px;
+    line-height:1;
+    font-weight:500;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    opacity:.72;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .rankingLabel{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:2px !important;
+    align-content:center !important;
+    min-width:0;
+  }
+
+  .rankingLabel .labelEn{
+    display:block;
+    font-size:var(--fs-sm) !important;
+    line-height:1.18 !important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .rankingLabel .labelJa{
+    display:block;
+    font-size:var(--fs-xs) !important;
+    line-height:1.2 !important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  /* The old inline rank marker is no longer used. */
+  .rankedAnalysisRow .impressionRank,
+  .rankedAnalysisRow .toneRank{
+    display:none !important;
+  }
+
+  @media (max-width:760px){
+    .toneAnalysisPanel .rankedAnalysisRow,
+    .impressionPanel .rankedAnalysisRow{
+      grid-template-columns:28px minmax(100px,132px) minmax(60px,1fr) 42px !important;
+      gap:8px !important;
+    }
+
+    .rankingNumber{
+      font-size:22px;
+    }
+  }
+
+  @media (max-width:540px){
+    .toneAnalysisPanel .rankedAnalysisRow,
+    .impressionPanel .rankedAnalysisRow{
+      grid-template-columns:26px minmax(92px,118px) minmax(52px,1fr) 38px !important;
+      gap:7px !important;
+    }
+
+    .rankingNumber{
+      font-size:20px;
+    }
+  }
+
+
+  /* =========================================================
+     v86 — tighter rank spacing + prevent English label clipping
+     ========================================================= */
+
+  .toneAnalysisPanel .rankedAnalysisRow,
+  .impressionPanel .rankedAnalysisRow{
+    grid-template-columns:22px minmax(112px,145px) minmax(70px,1fr) 44px !important;
+    column-gap:7px !important;
+  }
+
+  .rankingNumber{
+    min-width:20px !important;
+    width:20px !important;
+    margin:0 !important;
+    padding:0 !important;
+    line-height:1 !important;
+  }
+
+  .rankingLabel{
+    gap:3px !important;
+    padding:2px 0 1px !important;
+    overflow:visible !important;
+  }
+
+  .rankingLabel .labelEn{
+    line-height:1.34 !important;
+    padding:0 0 2px !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    white-space:nowrap !important;
+  }
+
+  .rankingLabel .labelJa{
+    line-height:1.28 !important;
+    padding:0 !important;
+  }
+
+  @media (max-width:760px){
+    .toneAnalysisPanel .rankedAnalysisRow,
+    .impressionPanel .rankedAnalysisRow{
+      grid-template-columns:21px minmax(102px,132px) minmax(60px,1fr) 42px !important;
+      column-gap:6px !important;
+    }
+
+    .rankingNumber{
+      min-width:19px !important;
+      width:19px !important;
+    }
+  }
+
+  @media (max-width:540px){
+    .toneAnalysisPanel .rankedAnalysisRow,
+    .impressionPanel .rankedAnalysisRow{
+      grid-template-columns:20px minmax(94px,118px) minmax(52px,1fr) 38px !important;
+      column-gap:5px !important;
+    }
+
+    .rankingNumber{
+      min-width:18px !important;
+      width:18px !important;
+    }
+  }
+
+
+  /* =========================================================
+     v87 — nudge ranking number slightly to the right
+     ========================================================= */
+
+  .rankingNumber{
+    justify-self:start !important;
+    transform:translateX(3px) !important;
+  }
+
+  @media (max-width:760px){
+    .rankingNumber{
+      transform:translateX(2px) !important;
+    }
+  }
+
+
+  /* =========================================================
+     v88 — tone image diagram + stacked secondary candidates
+     ========================================================= */
+
+  .toneAnalysisPanel .toneHeaderLine,
+  .impressionPanel .impressionLead{
+    display:block !important;
+    margin:0 0 12px !important;
+  }
+
+  .toneAnalysisPanel .tonePrimaryBlock,
+  .impressionPanel .impressionPrimaryBlock{
+    display:block !important;
+    min-width:0 !important;
+  }
+
+  .toneAnalysisPanel .toneSecondaryBlock,
+  .impressionPanel .impressionSecondaryBlock{
+    display:grid !important;
+    gap:4px !important;
+    align-content:start !important;
+    min-width:0 !important;
+    max-width:260px !important;
+    margin-top:12px !important;
+    padding:10px 0 0 !important;
+    border:0 !important;
+    border-top:1px solid rgba(184,179,186,.18) !important;
+  }
+
+  .toneAnalysisPanel .toneSecondaryBlock .secondaryTag,
+  .impressionPanel .impressionSecondaryBlock .secondaryTag{
+    margin:0 !important;
+  }
+
+  .toneDiagramCard{
+    margin:0 0 14px;
+    padding:12px 12px 13px;
+    border:1px solid rgba(184,179,186,.18);
+    background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(248,247,244,.84));
+  }
+
+  .toneDiagramHeader{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+  }
+
+  .toneDiagramTitle{
+    font-family:var(--font-ui);
+    font-size:var(--fs-sm);
+    line-height:1.2;
+    letter-spacing:.04em;
+    color:var(--ink);
+  }
+
+  .toneDiagramCurrent{
+    display:grid;
+    justify-items:end;
+    gap:1px;
+    min-width:0;
+  }
+
+  #toneDiagramName{
+    font-family:var(--font-ui);
+    font-size:var(--fs-sm);
+    line-height:1.15;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  .toneDiagramCurrentJa,
+  #toneDiagramNameJa{
+    font-family:var(--font-ui);
+    font-size:var(--fs-xs);
+    line-height:1.15;
+    color:var(--ink-soft);
+  }
+
+  .toneDiagramBody{
+    display:grid;
+    grid-template-columns:minmax(170px,1.1fr) minmax(180px,1fr);
+    gap:12px;
+    align-items:center;
+  }
+
+  .toneMapFigure{
+    position:relative;
+  }
+
+  .toneMapTopLabel,
+  .toneMapBottomLabel,
+  .toneMapSideLabel{
+    font-family:var(--font-ui);
+    font-size:var(--fs-xs);
+    color:var(--ink-soft);
+    letter-spacing:.03em;
+  }
+
+  .toneMapTopLabel{ margin:0 0 5px; }
+  .toneMapBottomLabel{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:5px;
+  }
+
+  .toneMapSideLabel{
+    position:absolute;
+    top:44px;
+    right:-2px;
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    letter-spacing:.04em;
+  }
+
+  .toneMapGrid{
+    position:relative;
+    height:126px;
+    overflow:hidden;
+    border:1px solid rgba(184,179,186,.18);
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.90),rgba(211,207,216,.56)),
+      linear-gradient(90deg,#f1efeb 0%,#ebe2d4 24%,#dce7dc 46%,#d9e4ee 70%,#ece0eb 100%);
+  }
+
+  .toneMapGrid::before,
+  .toneMapGrid::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+  }
+
+  .toneMapGrid::before{
+    background:
+      linear-gradient(90deg, transparent 24.75%, rgba(255,255,255,.44) 25%, rgba(255,255,255,.44) 25.6%, transparent 25.8%, transparent 49.75%, rgba(255,255,255,.44) 50%, rgba(255,255,255,.44) 50.6%, transparent 50.8%, transparent 74.75%, rgba(255,255,255,.44) 75%, rgba(255,255,255,.44) 75.6%, transparent 75.8%),
+      linear-gradient(180deg, transparent 24.75%, rgba(255,255,255,.44) 25%, rgba(255,255,255,.44) 25.6%, transparent 25.8%, transparent 49.75%, rgba(255,255,255,.44) 50%, rgba(255,255,255,.44) 50.6%, transparent 50.8%, transparent 74.75%, rgba(255,255,255,.44) 75%, rgba(255,255,255,.44) 75.6%, transparent 75.8%);
+    opacity:.9;
+  }
+
+  .toneMapGrid::after{
+    background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(95,91,103,.08));
+  }
+
+  .toneMapPoint{
+    position:absolute;
+    width:16px;
+    height:16px;
+    margin:-8px 0 0 -8px;
+    border-radius:999px;
+    border:2px solid rgba(255,255,255,.92);
+    box-shadow:0 0 0 1px rgba(94,91,103,.16),0 4px 12px rgba(34,34,42,.12);
+    background:#9a8fc7;
+    left:50%;
+    top:50%;
+    transition:left .35s cubic-bezier(.22,1,.36,1), top .35s cubic-bezier(.22,1,.36,1), background-color .35s ease;
+  }
+
+  .toneHueSamples{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+  }
+
+  .toneHueChip{
+    display:grid;
+    gap:4px;
+  }
+
+  .toneHueColor{
+    height:34px;
+    border:1px solid rgba(184,179,186,.18);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+
+  .toneHueLabel{
+    font-family:var(--font-mono);
+    font-size:var(--fs-2xs);
+    line-height:1.2;
+    color:var(--ink-soft);
+    text-align:center;
+    letter-spacing:.06em;
+  }
+
+  .toneDiagramCaption{
+    margin-top:10px;
+    font-family:var(--font-ui);
+    font-size:var(--fs-body);
+    line-height:1.58;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width:760px){
+    .toneDiagramBody{
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    .toneHueSamples{
+      grid-template-columns:repeat(6,minmax(0,1fr));
+    }
+
+    .toneMapSideLabel{
+      right:2px;
+    }
+  }
+
+
+  /* =========================================================
+     v89 — reference-style tone wheel beside tone candidates
+     ========================================================= */
+
+  .toneDiagramCard,
+  .toneMapFigure,
+  .toneHueSamples{
+    display:none !important;
+  }
+
+  .toneAnalysisPanel .toneHeaderLine{
+    display:grid !important;
+    grid-template-columns:minmax(0,.78fr) minmax(230px,1.22fr) !important;
+    gap:18px !important;
+    align-items:center !important;
+    margin:0 0 14px !important;
+  }
+
+  .toneIdentityStack{
+    display:grid;
+    gap:0;
+    min-width:0;
+  }
+
+  .toneAnalysisPanel .toneSecondaryBlock{
+    max-width:230px !important;
+    margin-top:12px !important;
+    padding-top:10px !important;
+  }
+
+  .toneReferenceVisual{
+    display:grid;
+    grid-template-columns:132px minmax(0,1fr);
+    gap:14px;
+    align-items:center;
+    min-width:0;
+    padding:8px 0 8px 4px;
+  }
+
+  .toneReferenceWheel{
+    position:relative;
+    width:126px;
+    height:126px;
+    margin:auto;
+  }
+
+  .toneReferenceCenter{
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:2;
+    width:72px;
+    height:72px;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    border-radius:50%;
+    background:rgba(249,248,245,.96);
+    border:1px solid rgba(184,179,186,.18);
+    text-align:center;
+  }
+
+  .toneReferenceCenter strong{
+    max-width:64px;
+    font-family:var(--font-ui);
+    font-size:12px;
+    line-height:1.08;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  .toneReferenceCenter span{
+    max-width:64px;
+    font-family:var(--font-ui);
+    font-size:10px;
+    line-height:1.12;
+    color:var(--ink-soft);
+  }
+
+  .toneWheelChip{
+    --tone-wheel-angle:calc(var(--tone-wheel-index) * 30deg);
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:19px;
+    height:30px;
+    margin:-15px 0 0 -9.5px;
+    border-radius:6px 6px 4px 4px;
+    border:1px solid rgba(255,255,255,.38);
+    box-shadow:0 0 0 1px rgba(92,88,99,.04);
+    transform:
+      rotate(var(--tone-wheel-angle))
+      translateY(-48px)
+      rotate(calc(var(--tone-wheel-angle) * -1));
+    transform-origin:center;
+  }
+
+  .toneReferenceText{
+    min-width:0;
+    display:grid;
+    gap:7px;
+    align-content:center;
+  }
+
+  .toneReferenceDescription{
+    max-width:260px;
+    font-family:var(--font-ui);
+    font-size:var(--fs-body);
+    line-height:1.62;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:.01em;
+  }
+
+  @media (max-width:900px){
+    .toneAnalysisPanel .toneHeaderLine{
+      grid-template-columns:minmax(0,.9fr) minmax(215px,1.1fr) !important;
+      gap:14px !important;
+    }
+
+    .toneReferenceVisual{
+      grid-template-columns:118px minmax(0,1fr);
+      gap:10px;
+    }
+
+    .toneReferenceWheel{
+      width:112px;
+      height:112px;
+    }
+
+    .toneReferenceCenter{
+      width:64px;
+      height:64px;
+    }
+
+    .toneWheelChip{
+      width:17px;
+      height:27px;
+      margin:-13.5px 0 0 -8.5px;
+      transform:
+        rotate(var(--tone-wheel-angle))
+        translateY(-43px)
+        rotate(calc(var(--tone-wheel-angle) * -1));
+    }
+  }
+
+  @media (max-width:760px){
+    .toneAnalysisPanel .toneHeaderLine{
+      grid-template-columns:1fr !important;
+      gap:12px !important;
+    }
+
+    .toneReferenceVisual{
+      grid-template-columns:126px minmax(0,1fr);
+      padding-top:4px;
+    }
+  }
+
+  @media (max-width:430px){
+    .toneReferenceVisual{
+      grid-template-columns:112px minmax(0,1fr);
+      gap:8px;
+    }
+
+    .toneReferenceDescription{
+      font-size:11px;
+    }
+  }
+
+
+
+  /* =========================================================
+     v90 — tone hue-wheel reference + impression guide block
+     ========================================================= */
+
+  .toneAnalysisPanel .toneHeaderLine,
+  .impressionLead{
+    align-items:center !important;
+  }
+
+  .impressionIdentityStack{
+    display:grid;
+    gap:0;
+    min-width:0;
+  }
+
+  .impressionSecondaryBlock,
+  .toneAnalysisPanel .toneSecondaryBlock{
+    max-width:230px !important;
+    margin-top:12px !important;
+    padding-top:10px !important;
+  }
+
+  .impressionLead{
+    grid-template-columns:minmax(0,.78fr) minmax(230px,1.22fr) !important;
+    gap:18px !important;
+    margin:0 0 14px !important;
+  }
+
+  .impressionReferenceVisual{
+    display:grid;
+    grid-template-columns:132px minmax(0,1fr);
+    gap:14px;
+    align-items:center;
+    min-width:0;
+    padding:8px 0 8px 4px;
+  }
+
+  .toneReferenceWheel,
+  .impressionReferenceWheel{
+    position:relative;
+    width:126px;
+    height:126px;
+    margin:auto;
+  }
+
+  .toneReferenceWheel svg,
+  .impressionReferenceWheel svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    overflow:visible;
+  }
+
+  .toneReferenceCenter,
+  .impressionReferenceCenter{
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:2;
+    width:72px;
+    height:72px;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    border-radius:50%;
+    background:rgba(249,248,245,.96);
+    border:1px solid rgba(184,179,186,.18);
+    text-align:center;
+    pointer-events:none;
+  }
+
+  .toneReferenceCenter strong,
+  .impressionReferenceCenter strong{
+    max-width:64px;
+    font-family:var(--font-ui);
+    font-size:12px;
+    line-height:1.08;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  .toneReferenceCenter span,
+  .impressionReferenceCenter span{
+    max-width:64px;
+    font-family:var(--font-ui);
+    font-size:10px;
+    line-height:1.12;
+    color:var(--ink-soft);
+  }
+
+  .toneReferenceText,
+  .impressionReferenceText{
+    min-width:0;
+    display:grid;
+    gap:7px;
+    align-content:center;
+  }
+
+  .toneReferenceDescription,
+  .impressionReferenceDescription{
+    max-width:260px;
+    font-family:var(--font-ui);
+    font-size:var(--fs-body);
+    line-height:1.62;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:.01em;
+  }
+
+  .toneHueSegment,
+  .impressionHueSegment{
+    stroke:rgba(255,255,255,.55);
+    stroke-width:.9;
+  }
+
+  .toneHueGuide,
+  .impressionHueGuide{
+    fill:rgba(255,255,255,.22);
+    stroke:rgba(184,179,186,.22);
+    stroke-width:1;
+  }
+
+  .toneHueInnerGuide,
+  .impressionHueInnerGuide{
+    fill:none;
+    stroke:rgba(184,179,186,.18);
+    stroke-width:1;
+  }
+
+  @media (max-width:900px){
+    .impressionLead,
+    .toneAnalysisPanel .toneHeaderLine{
+      grid-template-columns:minmax(0,.9fr) minmax(215px,1.1fr) !important;
+      gap:14px !important;
+    }
+
+    .impressionReferenceVisual,
+    .toneReferenceVisual{
+      grid-template-columns:118px minmax(0,1fr);
+      gap:10px;
+    }
+
+    .toneReferenceWheel,
+    .impressionReferenceWheel{
+      width:112px;
+      height:112px;
+    }
+
+    .toneReferenceCenter,
+    .impressionReferenceCenter{
+      width:64px;
+      height:64px;
+    }
+  }
+
+  @media (max-width:760px){
+    .impressionLead,
+    .toneAnalysisPanel .toneHeaderLine{
+      grid-template-columns:1fr !important;
+      gap:12px !important;
+    }
+
+    .impressionReferenceVisual,
+    .toneReferenceVisual{
+      grid-template-columns:126px minmax(0,1fr);
+      padding-top:4px;
+    }
+  }
+
+  @media (max-width:430px){
+    .impressionReferenceVisual,
+    .toneReferenceVisual{
+      grid-template-columns:112px minmax(0,1fr);
+      gap:8px;
+    }
+
+    .impressionReferenceDescription,
+    .toneReferenceDescription{
+      font-size:11px;
+    }
+  }
+
+
+
+  /* =========================================================
+     v91 — text-only impression guide + display-friendly tone wheel
+     ========================================================= */
+
+  .impressionLead{
+    display:grid !important;
+    grid-template-columns:minmax(0,.78fr) minmax(230px,1.22fr) !important;
+    gap:18px !important;
+    align-items:center !important;
+    margin:0 0 14px !important;
+  }
+
+  .impressionIdentityStack{
+    display:grid;
+    gap:0;
+    min-width:0;
+  }
+
+  .impressionReferenceVisual.impressionReferenceTextOnly{
+    display:block;
+    min-width:0;
+    padding:8px 0 8px 4px;
+  }
+
+  .impressionReferenceVisual.impressionReferenceTextOnly .impressionReferenceText{
+    display:grid;
+    gap:8px;
+    align-content:center;
+    min-height:118px;
+  }
+
+  .impressionReferenceVisual.impressionReferenceTextOnly .impressionReferenceDescription{
+    max-width:320px;
+  }
+
+  @media (max-width:900px){
+    .impressionLead{
+      grid-template-columns:minmax(0,.9fr) minmax(215px,1.1fr) !important;
+      gap:14px !important;
+    }
+  }
+
+  @media (max-width:760px){
+    .impressionLead{
+      grid-template-columns:1fr !important;
+      gap:12px !important;
+    }
+
+    .impressionReferenceVisual.impressionReferenceTextOnly{
+      padding-top:4px;
+    }
+
+    .impressionReferenceVisual.impressionReferenceTextOnly .impressionReferenceText{
+      min-height:0;
+    }
+  }
+
+
+
+  /* =========================================================
+     v92 — align impression explanation exactly like tone explanation
+     ========================================================= */
+
+  .impressionPanel .impressionLead{
+    display:grid !important;
+    grid-template-columns:minmax(0,.78fr) minmax(230px,1.22fr) !important;
+    gap:18px !important;
+    align-items:center !important;
+    margin:0 0 14px !important;
+  }
+
+  .impressionPanel .impressionIdentityStack{
+    display:grid !important;
+    gap:0 !important;
+    min-width:0 !important;
+  }
+
+  .impressionPanel .impressionReferenceVisual.impressionReferenceTextOnly{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    align-content:center !important;
+    align-items:center !important;
+    min-width:0 !important;
+    padding:8px 0 8px 4px !important;
+  }
+
+  .impressionPanel .impressionReferenceVisual.impressionReferenceTextOnly .impressionReferenceText{
+    display:grid !important;
+    gap:7px !important;
+    align-content:center !important;
+    min-height:118px !important;
+    min-width:0 !important;
+  }
+
+  .impressionPanel .impressionReferenceVisual.impressionReferenceTextOnly .impressionReferenceDescription{
+    max-width:260px !important;
+  }
+
+  @media (max-width:900px){
+    .impressionPanel .impressionLead{
+      grid-template-columns:minmax(0,.9fr) minmax(215px,1.1fr) !important;
+      gap:14px !important;
+    }
+  }
+
+  @media (max-width:760px){
+    .impressionPanel .impressionLead{
+      grid-template-columns:1fr !important;
+      gap:12px !important;
+      align-items:start !important;
+    }
+
+    .impressionPanel .impressionReferenceVisual.impressionReferenceTextOnly{
+      padding-top:4px !important;
+    }
+
+    .impressionPanel .impressionReferenceVisual.impressionReferenceTextOnly .impressionReferenceText{
+      min-height:0 !important;
+    }
+  }
+
+
+  /* =========================================================
+     v93 — top-align explanations + nudge tone wheel left
+     ========================================================= */
+
+  .toneAnalysisPanel .toneHeaderLine,
+  .impressionPanel .impressionLead{
+    align-items:start !important;
+  }
+
+  .toneAnalysisPanel .toneReferenceVisual,
+  .impressionPanel .impressionReferenceVisual.impressionReferenceTextOnly{
+    align-items:start !important;
+    align-content:start !important;
+  }
+
+  .toneAnalysisPanel .toneReferenceText,
+  .impressionPanel .impressionReferenceText{
+    align-content:start !important;
+    padding-top:0 !important;
+  }
+
+  .toneAnalysisPanel .toneReferenceDescription,
+  .impressionPanel .impressionReferenceDescription{
+    margin-top:0 !important;
+  }
+
+  .toneAnalysisPanel .toneReferenceWheel{
+    transform:translateX(-9px) !important;
+  }
+
+  @media (max-width:900px){
+    .toneAnalysisPanel .toneReferenceWheel{
+      transform:translateX(-6px) !important;
+    }
+  }
+
+  @media (max-width:760px){
+    .toneAnalysisPanel .toneReferenceWheel{
+      transform:translateX(-4px) !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v94 — inline explanations under primary label + right-aligned tone wheel
+     ========================================================= */
+
+  .inlineGuideDescription{
+    margin-top:10px;
+    max-width:270px;
+    font-family:var(--font-ui) !important;
+    font-size:var(--fs-body) !important;
+    line-height:1.62 !important;
+    font-weight:500 !important;
+    color:var(--ink) !important;
+    letter-spacing:.01em !important;
+  }
+
+  .tonePrimaryBlock,
+  .impressionPrimaryBlock{
+    display:grid !important;
+    align-content:start !important;
+    justify-items:start !important;
+  }
+
+  .tonePrimaryGuide,
+  .impressionPrimaryGuide{
+    align-self:start !important;
+  }
+
+  .toneAnalysisPanel .toneHeaderLine{
+    grid-template-columns:minmax(0,1fr) 146px !important;
+    align-items:start !important;
+    gap:18px !important;
+  }
+
+  .toneReferenceVisual{
+    display:flex !important;
+    justify-content:flex-end !important;
+    align-items:flex-start !important;
+    min-width:146px !important;
+    padding:2px 0 0 !important;
+  }
+
+  .toneReferenceVisual .toneReferenceWheel{
+    margin:0 0 0 auto !important;
+    justify-self:end !important;
+  }
+
+  .toneReferenceVisual .toneReferenceText,
+  .impressionReferenceVisual,
+  .impressionReferenceText,
+  .impressionReferenceDescription,
+  .impressionReferenceTextOnly{
+    display:none !important;
+  }
+
+  .impressionPanel .impressionLead{
+    grid-template-columns:1fr !important;
+    align-items:start !important;
+    gap:12px !important;
+  }
+
+  .impressionPanel .impressionIdentityStack{
+    max-width:420px !important;
+  }
+
+  .toneAnalysisPanel .toneSecondaryBlock,
+  .impressionPanel .impressionSecondaryBlock{
+    margin-top:12px !important;
+  }
+
+  /* palette shift fix */
+  .roleTop,
+  .roleGrid,
+  .allSwatches,
+  .swatchRow{
+    transform:none !important;
+  }
+
+  .allSwatches,
+  .swatchRow{
+    margin-left:0 !important;
+    padding-left:0 !important;
+    justify-content:flex-start !important;
+  }
+
+  @media (max-width:900px){
+    .toneAnalysisPanel .toneHeaderLine{
+      grid-template-columns:minmax(0,1fr) 126px !important;
+      gap:14px !important;
+    }
+
+    .toneReferenceVisual{
+      min-width:126px !important;
+    }
+  }
+
+  @media (max-width:760px){
+    .toneAnalysisPanel .toneHeaderLine,
+    .impressionPanel .impressionLead{
+      grid-template-columns:1fr !important;
+      gap:12px !important;
+    }
+
+    .toneReferenceVisual{
+      justify-content:flex-start !important;
+      min-width:0 !important;
+      padding-top:4px !important;
+    }
+
+    .toneReferenceVisual .toneReferenceWheel{
+      margin:0 !important;
+    }
+
+    .inlineGuideDescription{
+      max-width:100% !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v95 — stable palette rows + compact guide copy
+     ========================================================= */
+
+  .paletteCopySwatch{
+    display:grid !important;
+    grid-template-rows:auto auto 1.35em auto !important;
+    align-content:start !important;
+  }
+
+  .paletteCopySwatch .miniName{
+    min-height:1.35em !important;
+    height:1.35em !important;
+    line-height:1.35em !important;
+    margin-top:2px !important;
+    overflow:hidden !important;
+    white-space:nowrap !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .paletteCopySwatch .miniNameEmpty{
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+
+  .paletteCopySwatch .miniPct{
+    margin-top:2px !important;
+  }
+
+  .inlineGuideDescription{
+    max-width:300px !important;
+    margin-top:8px !important;
+    line-height:1.48 !important;
+    display:-webkit-box !important;
+    -webkit-box-orient:vertical !important;
+    -webkit-line-clamp:2 !important;
+    overflow:hidden !important;
+  }
+
+  @media (max-width:760px){
+    .inlineGuideDescription{
+      max-width:100% !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v96 — keep tone / impression descriptions on one line
+     ========================================================= */
+
+  .tonePrimaryGuide,
+  .impressionPrimaryGuide{
+    max-width:none !important;
+    width:max-content !important;
+    min-width:0 !important;
+    white-space:nowrap !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    line-height:1.45 !important;
+  }
+
+  .tonePrimaryBlock,
+  .impressionPrimaryBlock{
+    overflow:visible !important;
+  }
+
+  .toneIdentityStack,
+  .impressionIdentityStack{
+    overflow:visible !important;
+  }
+
+  @media (max-width:900px){
+    .tonePrimaryGuide,
+    .impressionPrimaryGuide{
+      font-size:11px !important;
+    }
+  }
+
+  @media (max-width:760px){
+    .tonePrimaryGuide,
+    .impressionPrimaryGuide{
+      width:auto !important;
+      max-width:100% !important;
+      white-space:normal !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v97 — swatch header copy hint + relationship heading spacing
+     ========================================================= */
+
+  .swatchHeaderAside{
+    display:grid;
+    justify-items:end;
+    align-content:start;
+    gap:5px;
+    min-width:0;
+    text-align:right;
+  }
+
+  .swatchHeaderCopyHint{
+    font-family:var(--font-ui);
+    font-size:var(--fs-xs);
+    line-height:1.3;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    opacity:.72;
+    white-space:nowrap;
+  }
+
+  .swatchHeaderCopyHint > span{
+    margin:0 .34em;
+    opacity:.48;
+  }
+
+  .swatchPanel .panelHeader{
+    align-items:flex-start !important;
+  }
+
+  .swatchPanel .headerConfidence{
+    margin-top:0 !important;
+  }
+
+  .relationshipPanel .headingJaSmall{
+    margin-left:13px !important;
+  }
+
+  @media (max-width:760px){
+    .swatchHeaderAside{
+      justify-items:start;
+      text-align:left;
+      width:100%;
+      margin-top:4px;
+    }
+
+    .swatchHeaderCopyHint{
+      white-space:normal;
+    }
+
+    .relationshipPanel .headingJaSmall{
+      margin-left:0 !important;
+    }
+  }
+
+
+  /* =========================================================
+     v98 — more vertical breathing between Relationship EN / JA
+     ========================================================= */
+
+  .relationshipPanel .panelTitle{
+    row-gap:5px !important;
+  }
+
+  .relationshipPanel .headingSub{
+    margin-top:4px !important;
+  }
+
+  .relationshipPanel .headingJaSmall{
+    margin-left:0 !important;
+  }
+
+  @media (max-width:760px){
+    .relationshipPanel .headingSub{
+      margin-top:3px !important;
+    }
+  }
+
+
+  /* =========================================================
+     v99 — separate relationship result EN / JA lines
+     ========================================================= */
+
+  .relationshipPanel .relationshipBlock{
+    gap:8px !important;
+  }
+
+  .relationshipPanel .relationshipName{
+    line-height:1.14 !important;
+    padding-bottom:2px !important;
+    overflow:visible !important;
+  }
+
+  .relationshipPanel .relationshipNameJa{
+    line-height:1.35 !important;
+    margin-top:0 !important;
+  }
+
+  @media (max-width:760px){
+    .relationshipPanel .relationshipBlock{
+      gap:7px !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v100 — typography hierarchy / readability optimization
+     Layout dimensions are intentionally preserved.
+     ========================================================= */
+
+  :root{
+    --text-strong:color-mix(in srgb,var(--ink) 88%,#202027 12%);
+    --text-body:color-mix(in srgb,var(--ink) 76%,var(--ink-soft) 24%);
+    --text-muted:var(--ink-soft);
+    --text-faint:color-mix(in srgb,var(--ink-soft) 74%,var(--paper) 26%);
+    --text-accent:color-mix(in srgb,var(--accent) 72%,var(--ink) 28%);
+  }
+
+  /* Section hierarchy */
+  .panelTitle .headingMain,
+  .chartTitle .headingMain{
+    color:var(--text-strong) !important;
+    font-weight:600 !important;
+    letter-spacing:.018em !important;
+  }
+
+  .panelTitle .headingJaSmall,
+  .chartTitle .headingJaSmall{
+    color:var(--text-muted) !important;
+    opacity:.92 !important;
+    font-weight:500 !important;
+  }
+
+  .panelTitle .titleMeta,
+  .chartTitle .titleMeta{
+    color:var(--text-faint) !important;
+    opacity:1 !important;
+    font-size:10px !important;
+  }
+
+  .secondaryTag{
+    color:var(--text-accent) !important;
+    font-size:11px !important;
+    line-height:1.3 !important;
+    font-weight:600 !important;
+    letter-spacing:.115em !important;
+  }
+
+  .headerConfidence{
+    color:var(--text-accent) !important;
+    font-weight:600 !important;
+    letter-spacing:.075em !important;
+    opacity:.86 !important;
+  }
+
+  /* Primary analysis values */
+  #tonePrimary,
+  #impressionPrimary,
+  .relationshipName{
+    color:var(--text-strong) !important;
+    font-weight:550 !important;
+  }
+
+  #tonePrimaryJa,
+  #impressionPrimaryJa,
+  .relationshipNameJa{
+    color:var(--text-body) !important;
+    font-weight:500 !important;
+  }
+
+  .toneAnalysisPanel .secondaryValue,
+  .impressionPanel .secondaryValue,
+  .relationshipPairName{
+    color:var(--text-strong) !important;
+    font-weight:600 !important;
+  }
+
+  .toneAnalysisPanel .secondaryValueJa,
+  .impressionPanel .secondaryValueJa,
+  .relationshipPairMeta{
+    color:var(--text-muted) !important;
+  }
+
+  .inlineGuideDescription{
+    color:var(--text-body) !important;
+    font-size:13px !important;
+    font-weight:500 !important;
+  }
+
+  /* Metrics: label quiet, value clear */
+  .metricTop{
+    color:var(--text-body) !important;
+    font-size:13px !important;
+    font-weight:500 !important;
+  }
+
+  .metricTop > span:last-child{
+    color:var(--text-strong) !important;
+    font-size:13px !important;
+    font-weight:700 !important;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .metricJa{
+    color:var(--text-muted) !important;
+    opacity:.90 !important;
+  }
+
+  /* Ranking rows */
+  .analysisBarRow .labelEn{
+    color:var(--text-strong) !important;
+    font-size:12.5px !important;
+    font-weight:600 !important;
+  }
+
+  .analysisBarRow .labelJa{
+    color:var(--text-muted) !important;
+    font-size:10.5px !important;
+    font-weight:500 !important;
+  }
+
+  .rankingNumber{
+    color:var(--text-faint) !important;
+    font-weight:600 !important;
+  }
+
+  .analysisBarPct,
+  .tonePct,
+  .impressionPct,
+  .distributionRankPct{
+    color:var(--text-accent) !important;
+    font-size:12.5px !important;
+    font-weight:700 !important;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* Tone Swatch Board */
+  .roleLabel{
+    color:var(--text-muted) !important;
+    font-weight:600 !important;
+  }
+
+  .roleLabelJa{
+    color:var(--text-muted) !important;
+    opacity:.92 !important;
+  }
+
+  .roleHex{
+    color:var(--text-strong) !important;
+    font-weight:600 !important;
+  }
+
+  .roleColorName{
+    color:var(--text-body) !important;
+    font-weight:600 !important;
+  }
+
+  .roleMeta{
+    color:var(--text-body) !important;
+    font-size:12.5px !important;
+  }
+
+  .roleHint{
+    color:var(--text-muted) !important;
+    font-size:11.5px !important;
+  }
+
+  .allSwatchesLabel{
+    color:var(--text-body) !important;
+    font-weight:600 !important;
+  }
+
+  .paletteCopyHint,
+  .swatchHeaderCopyHint{
+    color:var(--text-muted) !important;
+    opacity:.88 !important;
+  }
+
+  .miniHex{
+    color:var(--text-strong) !important;
+    font-size:11px !important;
+    font-weight:600 !important;
+  }
+
+  .miniName{
+    color:var(--text-body) !important;
+    font-size:10.5px !important;
+    font-weight:500 !important;
+  }
+
+  .miniPct{
+    color:var(--text-accent) !important;
+    font-size:11px !important;
+    font-weight:700 !important;
+  }
+
+  .distributionRankNo{
+    color:var(--text-faint) !important;
+    font-weight:600 !important;
+  }
+
+  .distributionRankColor strong{
+    color:var(--text-strong) !important;
+    font-weight:600 !important;
+  }
+
+  .distributionRankColor small{
+    color:var(--text-muted) !important;
+  }
+
+  /* Relationship reading */
+  .relationshipDescription{
+    color:var(--text-body) !important;
+    font-size:13px !important;
+    line-height:1.72 !important;
+  }
+
+  .relationshipLegendText strong{
+    color:var(--text-strong) !important;
+    font-weight:600 !important;
+  }
+
+  .relationshipLegendText span{
+    color:var(--text-muted) !important;
+  }
+
+  /* Long-form / utility text */
+  .summary{
+    color:var(--text-body) !important;
+    font-size:14px !important;
+    line-height:1.76 !important;
+  }
+
+  .exportSummary,
+  .exportStatus,
+  .empty,
+  .relationshipEmpty{
+    color:var(--text-body) !important;
+  }
+
+  .subtitle{
+    color:var(--text-muted) !important;
+  }
+
+  .footer{
+    color:var(--text-faint) !important;
+  }
+
+  /* Keep controls legible without competing with analysis values. */
+  button,
+  #resetBtn,
+  .exportBtn{
+    color:var(--text-body) !important;
+    font-weight:600 !important;
+  }
+
+  .exportBtn span{
+    color:var(--text-muted) !important;
+  }
+
+  @media (max-width:760px){
+    .secondaryTag{font-size:10px !important;}
+    .inlineGuideDescription{font-size:12px !important;}
+    .summary{font-size:13px !important;}
+    .roleMeta{font-size:12px !important;}
+    .roleHint{font-size:11px !important;}
+    .analysisBarRow .labelEn{font-size:11.5px !important;}
+    .analysisBarRow .labelJa{font-size:10px !important;}
+  }
+
+
+
+  /* =========================================================
+     v101 — API-free similar image search
+     ========================================================= */
+
+  .similarSearchBar{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:18px;
+    align-items:center;
+    padding:14px 20px 15px;
+    border-top:1px solid rgba(184,179,186,.22);
+    background:rgba(255,255,255,.10);
+  }
+
+  .similarSearchText{
+    display:grid;
+    gap:5px;
+    min-width:0;
+  }
+
+  .similarSearchTitle{
+    font-family:var(--font-ui);
+    font-size:10px;
+    line-height:1.3;
+    font-weight:650;
+    letter-spacing:.09em;
+    color:var(--ink);
+  }
+
+  .similarSearchTitle > span{
+    margin:0 .32em;
+    opacity:.42;
+  }
+
+  .similarSearchQuery{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-family:var(--font-mono);
+    font-size:10px;
+    line-height:1.45;
+    color:var(--ink);
+    opacity:.82;
+  }
+
+  .similarSearchPrivacy{
+    font-family:var(--font-ui);
+    font-size:9px;
+    line-height:1.45;
+    letter-spacing:.025em;
+    color:var(--ink-soft);
+    opacity:.70;
+  }
+
+  .similarImagesBtn{
+    min-width:166px;
+    margin:0;
+    padding:10px 13px 9px;
+    border:1px solid color-mix(in srgb,var(--detected-accent,var(--accent)) 30%,var(--line));
+    border-radius:0;
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 5%,rgba(255,255,255,.34));
+    color:var(--ink);
+    display:grid;
+    gap:2px;
+    justify-items:start;
+    text-align:left;
+    font-family:var(--font-ui);
+    font-size:10px;
+    line-height:1.25;
+    font-weight:650;
+    letter-spacing:.10em;
+    cursor:pointer;
+  }
+
+  .similarImagesBtn span{
+    font-size:9px;
+    line-height:1.25;
+    font-weight:450;
+    letter-spacing:.045em;
+    color:var(--ink-soft);
+  }
+
+  .similarImagesBtn:not(:disabled):hover{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 10%,rgba(255,255,255,.40));
+  }
+
+  .similarImagesBtn:focus-visible{
+    outline:2px solid var(--detected-accent,var(--accent));
+    outline-offset:2px;
+  }
+
+  .similarImagesBtn:disabled{
+    cursor:not-allowed;
+    opacity:.40;
+  }
+
+  @media (max-width:720px){
+    .similarSearchBar{
+      grid-template-columns:1fr;
+      gap:11px;
+      padding:13px 14px 14px;
+    }
+
+    .similarSearchQuery{
+      white-space:normal;
+    }
+
+    .similarImagesBtn{
+      width:100%;
+      min-width:0;
+    }
+  }
+
+
+
+  /* =========================================================
+     v102 — standalone, broader tone + color image search
+     ========================================================= */
+
+  .similarImagesPanel{
+    width:100%;
+    margin:0 !important;
+  }
+
+  .similarImagesPanel .similarSearchBar{
+    border-top:0 !important;
+    padding:15px 20px 16px !important;
+    background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.035)) !important;
+  }
+
+  .similarImagesPanel .similarSearchText{
+    gap:4px !important;
+  }
+
+  .similarImagesPanel .similarSearchQuery{
+    font-size:11px !important;
+    font-weight:600 !important;
+    color:var(--text-body,var(--ink)) !important;
+    opacity:1 !important;
+  }
+
+  .similarImagesPanel .similarSearchPrivacy{
+    font-size:9px !important;
+    color:var(--text-faint,var(--ink-soft)) !important;
+    opacity:.78 !important;
+  }
+
+  .similarImagesPanel .similarImagesBtn{
+    min-width:176px !important;
+  }
+
+  @media (max-width:720px){
+    .similarImagesPanel .similarSearchBar{
+      padding:13px 14px 14px !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v103 — detailed Overall Analysis prose
+     ========================================================= */
+
+  .overallAnalysisPanel .summary{
+    white-space:pre-line !important;
+    line-height:1.88 !important;
+    color:var(--ink) !important;
+  }
+
+
+
+  /* =========================================================
+     v105 — Google Images + Pinterest search actions
+     ========================================================= */
+
+  .similarSearchActions{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(156px,1fr));
+    gap:8px;
+    align-items:stretch;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn{
+    min-width:0 !important;
+    width:100%;
+    height:100%;
+  }
+
+  .pinterestImagesBtn{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 3%,rgba(255,255,255,.38));
+  }
+
+  @media (max-width:900px){
+    .similarSearchActions{
+      grid-template-columns:1fr;
+      min-width:176px;
+    }
+  }
+
+  @media (max-width:720px){
+    .similarSearchActions{
+      min-width:0;
+      width:100%;
+    }
+  }
+
+
+
+  /* =========================================================
+     v107 — tidy Relationship header height / divider alignment
+     ========================================================= */
+
+  /* Keep paired analysis headers on the same visual height so the divider line aligns cleanly. */
+  .bottomAnalysis > .panel > .panelHeader,
+  .toneAnalysisPanel > .panelHeader,
+  .impressionPanel > .panelHeader{
+    min-height:58px !important;
+    align-items:flex-start !important;
+  }
+
+  .relationshipPanel .panelTitle{
+    gap:2px !important;
+  }
+
+  .relationshipPanel .panelTitle .headingSub{
+    gap:3px 7px !important;
+    align-items:center !important;
+  }
+
+  .relationshipPanel .panelTitle .headingJaSmall,
+  .relationshipPanel .panelTitle .titleMeta{
+    line-height:1.15 !important;
+  }
+
+  .relationshipPanel .panelTitle .titleMeta{
+    position:relative;
+    top:-.5px;
+    opacity:.54 !important;
+  }
+
+  .relationshipPanel .headerConfidence,
+  .toneAnalysisPanel .headerConfidence,
+  .impressionPanel .headerConfidence{
+    align-self:flex-start !important;
+    padding-top:1px !important;
+  }
+
+  @media (max-width:900px){
+    .bottomAnalysis > .panel > .panelHeader,
+    .toneAnalysisPanel > .panelHeader,
+    .impressionPanel > .panelHeader{
+      min-height:auto !important;
+    }
+  }
+
+
+  /* =========================================================
+     v108 — true monochrome UI while no image is loaded
+     ========================================================= */
+
+  .app.noImageState{
+    filter:grayscale(1) saturate(0) !important;
+  }
+
+  .app.noImageState,
+  .app.noImageState *{
+    --accent:#707070 !important;
+    --accent-soft:#a9a9a9 !important;
+    --blue:#8f8f8f !important;
+    --detected-accent:#7b7b7b !important;
+  }
+
+  .app.noImageState .fill,
+  .app.noImageState .toneHueSegment,
+  .app.noImageState .impressionHueSegment,
+  .app.noImageState .hueRingSegment,
+  .app.noImageState .distributionRankSwatch,
+  .app.noImageState .miniBox,
+  .app.noImageState .roleSwatch{
+    filter:grayscale(1) saturate(0) !important;
+  }
+
+  .app.noImageState button,
+  .app.noImageState .badge,
+  .app.noImageState .panelHeader,
+  .app.noImageState .chartCard{
+    box-shadow:none !important;
+  }
+
+  .app{
+    transition:filter .28s ease;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .app{
+      transition:none !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v109 — expanded similar image search sources
+     ========================================================= */
+
+  .similarSearchActions{
+    grid-template-columns:repeat(3,minmax(156px,1fr)) !important;
+  }
+
+  .googleImagesBtn{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 5%,rgba(255,255,255,.34));
+  }
+
+  .bingImagesBtn{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 4%,rgba(255,255,255,.36));
+  }
+
+  .unsplashImagesBtn{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 2%,rgba(255,255,255,.40));
+  }
+
+  .pexelsImagesBtn{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 6%,rgba(255,255,255,.32));
+  }
+
+  .behanceImagesBtn{
+    background:color-mix(in srgb,var(--detected-accent,var(--accent)) 8%,rgba(255,255,255,.30));
+  }
+
+  @media (max-width:1080px){
+    .similarSearchActions{
+      grid-template-columns:repeat(2,minmax(156px,1fr)) !important;
+    }
+  }
+
+  @media (max-width:900px){
+    .similarSearchActions{
+      grid-template-columns:1fr !important;
+      min-width:176px;
+    }
+  }
+
+
+
+  /* =========================================================
+     v110 — compact similar image buttons row
+     ========================================================= */
+
+  .similarSearchText,
+  .similarSearchQuery,
+  .similarSearchPrivacy{
+    display:none !important;
+  }
+
+  .similarImagesPanel .similarSearchBar.similarSearchBarCompact{
+    display:block !important;
+    padding:15px 20px 16px !important;
+  }
+
+  .similarSearchActions{
+    display:grid !important;
+    grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+    gap:8px !important;
+    align-items:stretch !important;
+    min-width:0 !important;
+    width:100% !important;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn,
+  .googleImagesBtn,
+  .pinterestImagesBtn,
+  .bingImagesBtn,
+  .unsplashImagesBtn,
+  .pexelsImagesBtn,
+  .behanceImagesBtn{
+    min-width:0 !important;
+    width:100% !important;
+    height:100% !important;
+    background:#ffffff !important;
+    border:1px solid rgba(184,179,186,.24) !important;
+    color:var(--ink) !important;
+    box-shadow:none !important;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn span{
+    color:var(--ink-soft) !important;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn:not(:disabled):hover{
+    background:#f7f6f3 !important;
+  }
+
+  @media (max-width:1200px){
+    .similarSearchActions{
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    }
+  }
+
+  @media (max-width:820px){
+    .similarSearchActions{
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    }
+  }
+
+  @media (max-width:560px){
+    .similarSearchActions{
+      grid-template-columns:1fr !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v111 — Similar Images buttons match Palette Export controls
+     ========================================================= */
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn{
+    min-width:0 !important;
+    width:100% !important;
+    min-height:48px !important;
+    margin:0 !important;
+    padding:10px 13px !important;
+    border:1px solid var(--line-strong) !important;
+    border-radius:0 !important;
+    background:rgba(255,255,255,.52) !important;
+    color:var(--text-body,var(--ink)) !important;
+    box-shadow:none !important;
+    display:grid !important;
+    gap:2px !important;
+    justify-items:start !important;
+    text-align:left !important;
+    font-family:var(--font-ui) !important;
+    font-size:var(--fs-xs) !important;
+    line-height:1.35 !important;
+    font-weight:600 !important;
+    letter-spacing:.075em !important;
+    cursor:pointer !important;
+    transition:.16s ease !important;
+    transform:none;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn span{
+    font-size:var(--fs-xs) !important;
+    line-height:1.35 !important;
+    font-weight:400 !important;
+    letter-spacing:.055em !important;
+    color:var(--text-muted,var(--ink-soft)) !important;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn:not(:disabled):hover{
+    background:rgba(255,255,255,.92) !important;
+    border-color:var(--accent) !important;
+    transform:translateY(-1px) !important;
+  }
+
+  .similarImagesPanel .similarSearchActions .similarImagesBtn:disabled{
+    cursor:not-allowed !important;
+    opacity:.42 !important;
+    transform:none !important;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .similarImagesPanel .similarSearchActions .similarImagesBtn{
+      transition:none !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v112 — Palette Export hover lift matches Similar Images
+     ========================================================= */
+
+  .exportPanel .exportBtn{
+    transition:.16s ease !important;
+    transform:none;
+  }
+
+  .exportPanel .exportBtn:not(:disabled):hover{
+    background:rgba(255,255,255,.92) !important;
+    border-color:var(--accent) !important;
+    transform:translateY(-1px) !important;
+  }
+
+  .exportPanel .exportBtn:not(:disabled):active{
+    transform:translateY(0) !important;
+  }
+
+  .exportPanel .exportBtn:disabled{
+    transform:none !important;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .exportPanel .exportBtn{
+      transition:none !important;
+    }
+  }
+
+
+  /* =========================================================
+     v113 — palette swatch hover lift
+     ========================================================= */
+
+  .paletteCopySwatch{
+    transform:translateY(0);
+    transition:
+      transform .20s cubic-bezier(.22,1,.36,1),
+      filter .20s ease,
+      box-shadow .20s ease !important;
+    will-change:transform;
+  }
+
+  .paletteCopySwatch:hover{
+    transform:translateY(-2px);
+  }
+
+  .paletteCopySwatch:active{
+    transform:translateY(0);
+  }
+
+  .roleCard{
+    transform:translateY(0);
+    transition:
+      transform .20s cubic-bezier(.22,1,.36,1),
+      box-shadow .20s ease,
+      border-color .20s ease !important;
+    will-change:transform;
+  }
+
+  .roleCard:has(.roleCopySwatch:hover){
+    transform:translateY(-2px);
+    box-shadow:0 5px 13px rgba(44,42,47,.055);
+  }
+
+  .roleCard:has(.roleCopySwatch:active){
+    transform:translateY(0);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .paletteCopySwatch,
+    .roleCard{
+      transition:none !important;
+      transform:none !important;
+    }
+  }
+
+
+
+  /* v116 — keep search button captions on one line */
+  .similarImagesPanel .similarSearchActions .similarImagesBtn span{
+    white-space:nowrap !important;
+    font-size:8.5px !important;
+    letter-spacing:.035em !important;
+  }
+
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app noImageState">
   <div class="topbar">
     <div>
       <h1>PALETTE LENS</h1>
@@ -4706,7 +6919,7 @@
       <div class="panelHeader"><div class="panelTitle">
           <span class="headingMain">Tone Swatch Board — Palette Study</span>
           <span class="headingSub"><span class="headingJaSmall">配色パレット / 色彩構成</span></span>
-        </div><div class="headerConfidence" id="rolesConfidence">CONFIDENCE —</div></div>
+        </div><div class="swatchHeaderAside"><div class="swatchHeaderCopyHint">CLICK TO COPY HEX <span>/</span> クリックでカラーコードをコピー</div><div class="headerConfidence" id="rolesConfidence">CONFIDENCE —</div></div></div>
       <div class="rolePanel" id="rolePanel">
         <div class="empty">画像を読み込むと、多数の色を抽出し、似た色を自動統合して、役割・構成比・全体バランスを表示します。</div>
       </div>
@@ -4774,15 +6987,27 @@
         </div><div class="headerConfidence" id="toneConfidence">CONFIDENCE —</div></div>
         <div class="toneWrap">
           <div class="toneBig impressionHeaderLine toneHeaderLine">
-            <div class="impressionPrimaryBlock tonePrimaryBlock">
-              <div class="secondaryTag">Primary <span class="titleSep">/</span> 第1色調</div>
-              <strong id="tonePrimary">—</strong>
-              <div class="impressionPrimaryJa" id="tonePrimaryJa">—</div>
+            <div class="toneIdentityStack">
+              <div class="impressionPrimaryBlock tonePrimaryBlock">
+                <div class="secondaryTag">Primary <span class="titleSep">/</span> 第1色調</div>
+                <strong id="tonePrimary">—</strong>
+                <div class="impressionPrimaryJa" id="tonePrimaryJa">—</div>
+                <div class="inlineGuideDescription tonePrimaryGuide" id="tonePrimaryGuideCaption">解析後に該当トーンの色合いイメージを表示します。</div>
+              </div>
+              <div class="impressionSecondaryBlock toneSecondaryBlock">
+                <div class="secondaryTag">Secondary <span class="titleSep">/</span> 第2色調</div>
+                <div class="secondaryValue" id="toneSecondary">—</div>
+                <div class="secondaryValueJa" id="toneSecondaryJa">—</div>
+              </div>
             </div>
-            <div class="impressionSecondaryBlock toneSecondaryBlock">
-              <div class="secondaryTag">Secondary <span class="titleSep">/</span> 第2色調</div>
-              <div class="secondaryValue" id="toneSecondary">—</div>
-              <div class="secondaryValueJa" id="toneSecondaryJa">—</div>
+
+            <div class="toneReferenceVisual" id="toneReferenceVisual">
+              <div class="toneReferenceWheel" id="toneReferenceWheel" aria-hidden="true">
+                <div class="toneReferenceCenter">
+                  <strong id="toneDiagramName">—</strong>
+                  <span id="toneDiagramNameJa">—</span>
+                </div>
+              </div>
             </div>
 
             <div class="toneLegacyHidden" aria-hidden="true">
@@ -4801,16 +7026,20 @@
         </div><div class="headerConfidence" id="impressionConfidence">CONFIDENCE —</div></div>
         <div class="impressionWrap" id="impressionSection">
           <div class="impressionLead">
-            <div class="impressionPrimaryBlock">
-              <div class="secondaryTag">Primary <span class="titleSep">/</span> 第1印象</div>
-              <strong id="impressionPrimary">—</strong>
-              <div class="impressionPrimaryJa" id="impressionPrimaryJa">—</div>
+            <div class="impressionIdentityStack">
+              <div class="impressionPrimaryBlock">
+                <div class="secondaryTag">Primary <span class="titleSep">/</span> 第1印象</div>
+                <strong id="impressionPrimary">—</strong>
+                <div class="impressionPrimaryJa" id="impressionPrimaryJa">—</div>
+                <div class="inlineGuideDescription impressionPrimaryGuide" id="impressionPrimaryGuideCaption">解析後に該当する印象の特徴を表示します。</div>
+              </div>
+              <div class="impressionSecondaryBlock">
+                <div class="secondaryTag">Secondary <span class="titleSep">/</span> 第2印象</div>
+                <div class="secondaryValue" id="impressionSecondary">—</div>
+                <div class="secondaryValueJa" id="impressionSecondaryJa">—</div>
+              </div>
             </div>
-            <div class="impressionSecondaryBlock">
-              <div class="secondaryTag">Secondary <span class="titleSep">/</span> 第2印象</div>
-              <div class="secondaryValue" id="impressionSecondary">—</div>
-              <div class="secondaryValueJa" id="impressionSecondaryJa">—</div>
-            </div>
+            <div class="impressionReferenceVisual impressionReferenceTextOnly" id="impressionReferenceVisual" aria-hidden="true"></div>
           </div>
           <div class="impressionBars" id="impressionBars"></div>
         </div>
@@ -4827,6 +7056,43 @@
         </div>
         <div class="overallAnalysisBody">
           <div class="summary" id="summary">画像を入れると、色調・印象・配色構造をまとめて説明します。</div>
+        </div>
+      </section>
+
+<section class="panel similarImagesPanel">
+        <div class="panelHeader">
+          <div class="panelTitle">
+            <span class="headingMain">Similar Images</span>
+            <span class="headingSub"><span class="headingJaSmall">似た色味の画像を探す</span><span class="titleMeta">TONE + COLOR / 色調検索</span></span>
+          </div>
+        </div>
+        <div class="similarSearchBar similarSearchBarCompact" id="similarSearchBar">
+          <div class="similarSearchActions">
+            <button type="button" class="similarImagesBtn exportBtn googleImagesBtn" id="similarImagesBtn" disabled>
+              GOOGLE IMAGES
+              <span>Googleで似た画像を探す ↗</span>
+            </button>
+            <button type="button" class="similarImagesBtn exportBtn bingImagesBtn" id="bingImagesBtn" disabled>
+              BING IMAGES
+              <span>Bing Imagesで似た画像を探す ↗</span>
+            </button>
+            <button type="button" class="similarImagesBtn exportBtn pinterestImagesBtn" id="pinterestImagesBtn" disabled>
+              PINTEREST
+              <span>Pinterestで似た画像を探す ↗</span>
+            </button>
+            <button type="button" class="similarImagesBtn exportBtn unsplashImagesBtn" id="unsplashImagesBtn" disabled>
+              UNSPLASH
+              <span>Unsplashで似た画像を探す ↗</span>
+            </button>
+            <button type="button" class="similarImagesBtn exportBtn pexelsImagesBtn" id="pexelsImagesBtn" disabled>
+              PEXELS
+              <span>Pexelsで似た画像を探す ↗</span>
+            </button>
+            <button type="button" class="similarImagesBtn exportBtn behanceImagesBtn" id="behanceImagesBtn" disabled>
+              BEHANCE
+              <span>Behanceで似た画像を探す ↗</span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -4882,6 +7148,33 @@ document.getElementById('copyJsonBtn')?.addEventListener('click',()=>exportPalet
 document.getElementById('saveJsonBtn')?.addEventListener('click',()=>exportPalette('json-save'));
 document.getElementById('savePngBtn')?.addEventListener('click',()=>exportPalette('png'));
 
+const similarImagesBtn=document.getElementById('similarImagesBtn');
+const pinterestImagesBtn=document.getElementById('pinterestImagesBtn');
+const bingImagesBtn=document.getElementById('bingImagesBtn');
+const unsplashImagesBtn=document.getElementById('unsplashImagesBtn');
+const pexelsImagesBtn=document.getElementById('pexelsImagesBtn');
+const behanceImagesBtn=document.getElementById('behanceImagesBtn');
+
+function openSimilarImageSearch(url){
+  const opened=window.open(url,'_blank','noopener,noreferrer');
+  if(opened) opened.opener=null;
+}
+
+function attachSimilarSearchButton(button, urlBuilder){
+  button?.addEventListener('click',()=>{
+    const query=button.dataset.searchQuery || '';
+    if(!query) return;
+    openSimilarImageSearch(urlBuilder(query));
+  });
+}
+
+attachSimilarSearchButton(similarImagesBtn, query => `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`);
+attachSimilarSearchButton(pinterestImagesBtn, query => `https://jp.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`);
+attachSimilarSearchButton(bingImagesBtn, query => `https://www.bing.com/images/search?q=${encodeURIComponent(query)}`);
+attachSimilarSearchButton(unsplashImagesBtn, query => `https://unsplash.com/s/photos/${encodeURIComponent(query)}`);
+attachSimilarSearchButton(pexelsImagesBtn, query => `https://www.pexels.com/search/${encodeURIComponent(query)}/`);
+attachSimilarSearchButton(behanceImagesBtn, query => `https://www.behance.net/search/projects?search=${encodeURIComponent(query)}`);
+
 
 chooseBtn.onclick = () => fileInput.click();
 fileInput.onchange = e => {
@@ -4908,6 +7201,7 @@ function resetUI(){
   clearBarAnimations();
   clearTextAnimations();
   clearDynamicTheme();
+  document.querySelector('.app')?.classList.add('noImageState');
   preview.src = '';
   preview.style.display = 'none';
   dropText.style.display = 'block';
@@ -4931,12 +7225,14 @@ function resetUI(){
   document.getElementById('toneNameJa').textContent = '—';
   document.getElementById('toneScore').textContent = 'No image';
   document.getElementById('toneBars').innerHTML = '';
+  resetToneDiagram();
   document.getElementById('summary').textContent = '画像を入れると、色調・印象・配色構造をまとめて説明します。';
   document.getElementById('impressionPrimary').textContent = '—';
   document.getElementById('impressionPrimaryJa').textContent = '—';
   document.getElementById('impressionSecondary').textContent = '—';
   document.getElementById('impressionSecondaryJa').textContent = '—';
   document.getElementById('impressionBars').innerHTML = '';
+  resetImpressionGuide();
   resetAdvancedPanels();
 }
 
@@ -4953,6 +7249,7 @@ function loadImage(file){
   reader.onload = () => {
     preview.src = reader.result;
     preview.onload = () => {
+      document.querySelector('.app')?.classList.remove('noImageState');
       preview.style.display='block';
       dropText.style.display='none';
       dropZone.classList.add('has-image');
@@ -5115,6 +7412,8 @@ function setPreAnalysisState(){
   document.getElementById('impressionSecondary').textContent='—';
   document.getElementById('impressionSecondaryJa').textContent='—';
   document.getElementById('impressionBars').innerHTML='';
+  resetToneDiagram();
+  resetImpressionGuide();
 
   resetAdvancedPanels(true);
 }
@@ -5524,9 +7823,28 @@ function setupScrollDrivenResultAnimations(data){
     }
   });
 
+  addResultReveal(tonePanel?.querySelector('.toneReferenceVisual'),{
+    delay:110,
+    className:'revealSoft'
+  });
+  addResultReveal(tonePanel?.querySelector('.toneReferenceWheel'),{
+    delay:150,
+    className:'revealChart'
+  });
+  tonePanel?.querySelectorAll('.toneWheelChip').forEach((chip,index)=>{
+    addResultReveal(chip,{
+      delay:180+index*28,
+      className:'revealSmall'
+    });
+  });
+  addResultReveal(tonePanel?.querySelector('.toneReferenceText'),{
+    delay:210,
+    className:'revealSmall'
+  });
+
   tonePanel?.querySelectorAll('#toneBars .toneRow').forEach((metric,index)=>{
     addResultReveal(metric,{
-      delay:120+index*95,
+      delay:230+index*82,
       className:'revealSmall',
       callback:()=>animateSingleToneMetric(metric)
     });
@@ -5593,9 +7911,27 @@ function setupScrollDrivenResultAnimations(data){
     addResultReveal(summary,{
       delay:95,
       className:'revealSoft',
-      callback:()=>typewriterText(summary,summaryText,70,2350)
+      callback:()=>typewriterText(summary,summaryText,70,Math.min(6200,Math.max(2600,summaryText.length*7)))
     });
   }
+  addResultReveal(overallAnalysisPanel?.querySelector('.similarSearchBar'),{
+    delay:140,
+    className:'revealSmall'
+  });
+
+  // Similar Images — same staged button reveal used by Palette Export.
+  const similarImagesPanel=document.querySelector('.similarImagesPanel');
+  addResultReveal(similarImagesPanel,{className:'revealSoft'});
+  addResultReveal(similarImagesPanel?.querySelector('.panelHeader'),{
+    delay:55,
+    className:'revealSmall'
+  });
+  similarImagesPanel?.querySelectorAll('.similarImagesBtn').forEach((button,index)=>{
+    addResultReveal(button,{
+      delay:120+index*58,
+      className:'revealSmall'
+    });
+  });
 
   // Palette Export.
   const exportPanel=document.querySelector('.exportPanel');
@@ -5700,9 +8036,13 @@ function buildPixelFeatureSet(rgba,w,h){
   let temperatureWeight=0;
   let seed=2166136261>>>0;
   const coarseBins=new Set();
+  const hsv=[0,0,0];
+  const o=[0,0,0];
+  const rgbaLength=rgba.length;
+  const rowStride=w*4;
 
   const rgbEdge=(i,j)=>{
-    if(j<0 || j>=rgba.length || rgba[j+3]<180) return 0;
+    if(j<0 || j>=rgbaLength || rgba[j+3]<180) return 0;
     const dr=rgba[i]-rgba[j];
     const dg=rgba[i+1]-rgba[j+1];
     const db=rgba[i+2]-rgba[j+2];
@@ -5714,16 +8054,17 @@ function buildPixelFeatureSet(rgba,w,h){
     if(rgba[i+3]<180) continue;
 
     const r=rgba[i],g=rgba[i+1],b=rgba[i+2];
-    const hsv=rgbToHsv(r,g,b);
-    const o=rgbToOklab(r,g,b);
+    rgb8ToHsvInto(r,g,b,hsv);
+    rgb8ToOklabInto(r,g,b,o);
     const c=Math.sqrt(o[1]*o[1]+o[2]*o[2]);
+    const oBase=n*3;
 
-    okLab[n*3]=o[0];
-    okLab[n*3+1]=o[1];
-    okLab[n*3+2]=o[2];
-    hsvS[n]=hsv.s;
-    hsvV[n]=hsv.v;
-    lum[n]=(.2126*r+.7152*g+.0722*b)/255;
+    okLab[oBase]=o[0];
+    okLab[oBase+1]=o[1];
+    okLab[oBase+2]=o[2];
+    hsvS[n]=hsv[1];
+    hsvV[n]=hsv[2];
+    lum[n]=(LUMA_R_8BIT[r]+LUMA_G_8BIT[g]+LUMA_B_8BIT[b])/255;
     okChroma[n]=c;
 
     const x=p%w;
@@ -5734,7 +8075,7 @@ function buildPixelFeatureSet(rgba,w,h){
     // Local edge strength is used only to stabilise palette extraction.
     // Edge pixels still count normally in final area percentages.
     const right=x<w-1 ? i+4 : -1;
-    const down=y<h-1 ? i+w*4 : -1;
+    const down=y<h-1 ? i+rowStride : -1;
     const edge=Math.max(
       right>=0?rgbEdge(i,right):0,
       down>=0?rgbEdge(i,down):0
@@ -5746,8 +8087,8 @@ function buildPixelFeatureSet(rgba,w,h){
     const edgePenalty=clamp01(edge/.32);
     clusterWeight[n]=.56+.44*(1-edgePenalty);
 
-    const tempWeight=Math.pow(hsv.s,.78)*(.35+.65*o[0]);
-    temperatureWeightedSum+=hueTemperatureScore(hsv.h)*tempWeight;
+    const tempWeight=Math.pow(hsv[1],.78)*(.35+.65*o[0]);
+    temperatureWeightedSum+=hueTemperatureScore(hsv[0])*tempWeight;
     temperatureWeight+=tempWeight;
 
     const qL=Math.max(0,Math.min(9,Math.floor(o[0]*10)));
@@ -5780,7 +8121,7 @@ function buildPixelFeatureSet(rgba,w,h){
 }
 
 function sortedFloatCopy(values){
-  const copy=Float32Array.from(values);
+  const copy=values.slice();
   copy.sort();
   return copy;
 }
@@ -7425,6 +9766,155 @@ function renderConfidence(confidence){
   setHeaderConfidence('relationshipConfidence',byKey.relationship ?? 0);
 }
 
+function similarSearchHueWord(color){
+  if(!color?.hsv) return '';
+  const h=((color.hsv.h%360)+360)%360;
+  const s=clamp01(color.hsv.s);
+  const v=clamp01(color.hsv.v);
+
+  if(s<.10){
+    if(v>=.88) return 'white';
+    if(v<=.18) return 'black';
+    if(v>=.68) return 'light gray';
+    if(v<=.38) return 'dark gray';
+    return 'gray';
+  }
+
+  let hue='red';
+  if(h>=15&&h<42) hue='orange';
+  else if(h>=42&&h<68) hue='yellow';
+  else if(h>=68&&h<95) hue='lime';
+  else if(h>=95&&h<165) hue='green';
+  else if(h>=165&&h<192) hue='teal';
+  else if(h>=192&&h<212) hue='cyan';
+  else if(h>=212&&h<252) hue='blue';
+  else if(h>=252&&h<275) hue='indigo';
+  else if(h>=275&&h<315) hue='purple';
+  else if(h>=315&&h<345) hue='pink';
+
+  const qualifiers=[];
+  if(v>=.78) qualifiers.push('light');
+  else if(v<=.36) qualifiers.push('dark');
+  if(s<=.28) qualifiers.push('muted');
+  else if(s>=.72 && v>.42) qualifiers.push('vivid');
+
+  return [...new Set([...qualifiers,hue])].join(' ');
+}
+
+function similarSearchToneWord(name){
+  const map={
+    'Very Pale':'very pale',
+    'Pale':'pastel',
+    'Light':'light',
+    'Bright':'bright',
+    'Vivid':'vivid',
+    'Strong':'bold',
+    'Deep':'deep',
+    'Dark':'dark',
+    'Very Dark':'very dark',
+    'Pale Grayish':'pale',
+    'Light Grayish':'light',
+    'Middle Grayish':'gray',
+    'Grayish':'gray',
+    'Dark Grayish':'dark',
+    'Very Grayish':'gray',
+    'Soft':'soft',
+    'Dull':'dull'
+  };
+  return map[name] || String(name||'').toLowerCase();
+}
+
+function similarSearchBasicHueWord(color){
+  if(!color?.hsv) return '';
+  const h=((color.hsv.h%360)+360)%360;
+  const s=clamp01(color.hsv.s);
+  const v=clamp01(color.hsv.v);
+
+  if(s<.10){
+    if(v>=.86) return 'white';
+    if(v<=.20) return 'black';
+    return 'gray';
+  }
+
+  if(h>=15&&h<42) return 'orange';
+  if(h>=42&&h<68) return 'yellow';
+  if(h>=68&&h<95) return 'lime';
+  if(h>=95&&h<165) return 'green';
+  if(h>=165&&h<192) return 'teal';
+  if(h>=192&&h<212) return 'cyan';
+  if(h>=212&&h<252) return 'blue';
+  if(h>=252&&h<275) return 'indigo';
+  if(h>=275&&h<315) return 'purple';
+  if(h>=315&&h<345) return 'pink';
+  return 'red';
+}
+
+function buildSimilarImageQuery(data){
+  if(!data) return '';
+
+  const tone=similarSearchToneWord(data.toneResult?.name);
+  const candidates=[
+    similarSearchBasicHueWord(data.roleMap?.base),
+    similarSearchBasicHueWord(data.roleMap?.accent),
+    similarSearchBasicHueWord(data.roleMap?.sub)
+  ].filter(Boolean);
+
+  const colors=[];
+  for(const word of candidates){
+    if(!colors.includes(word)) colors.push(word);
+    if(colors.length>=2) break;
+  }
+
+  return [tone,...colors].filter(Boolean).join(' ');
+}
+
+function resetSimilarImageSearch(analyzing=false){
+  const buttons=[
+    document.getElementById('similarImagesBtn'),
+    document.getElementById('pinterestImagesBtn'),
+    document.getElementById('bingImagesBtn'),
+    document.getElementById('unsplashImagesBtn'),
+    document.getElementById('pexelsImagesBtn'),
+    document.getElementById('behanceImagesBtn')
+  ].filter(Boolean);
+  buttons.forEach(btn=>{
+    btn.disabled=true;
+    delete btn.dataset.searchQuery;
+    btn.removeAttribute('title');
+  });
+}
+
+function renderSimilarImageSearch(data){
+  const googleBtn=document.getElementById('similarImagesBtn');
+  const pinterestBtn=document.getElementById('pinterestImagesBtn');
+  const bingBtn=document.getElementById('bingImagesBtn');
+  const unsplashBtn=document.getElementById('unsplashImagesBtn');
+  const pexelsBtn=document.getElementById('pexelsImagesBtn');
+  const behanceBtn=document.getElementById('behanceImagesBtn');
+  const buttons=[googleBtn,pinterestBtn,bingBtn,unsplashBtn,pexelsBtn,behanceBtn];
+  if(buttons.some(btn=>!btn)) return;
+  const query=buildSimilarImageQuery(data);
+  if(!query){
+    resetSimilarImageSearch(false);
+    return;
+  }
+
+  const labels=new Map([
+    [googleBtn,'Google Images'],
+    [pinterestBtn,'Pinterest'],
+    [bingBtn,'Bing Images'],
+    [unsplashBtn,'Unsplash'],
+    [pexelsBtn,'Pexels'],
+    [behanceBtn,'Behance']
+  ]);
+
+  buttons.forEach(btn=>{
+    btn.dataset.searchQuery=query;
+    btn.title=`${labels.get(btn)}で「${query}」を検索`;
+    btn.disabled=false;
+  });
+}
+
 function resetAdvancedPanels(analyzing=false){
   currentAnalysisData=null;
 
@@ -7450,6 +9940,7 @@ function resetAdvancedPanels(analyzing=false){
   setExportEnabled(false);
   set('exportSummary',analyzing?'パレットデータを準備しています…':'画像を解析するとパレットを書き出せます。');
   set('exportStatus','');
+  resetSimilarImageSearch(analyzing);
 }
 
 function setExportEnabled(enabled){
@@ -7750,18 +10241,19 @@ function renderImpression(impression){
   pj.textContent=impressionJa(impression.primary);
   s.textContent=impression.secondary;
   sj.textContent=impressionJa(impression.secondary);
+  renderImpressionGuide(impression.primary);
   wrap.innerHTML='';
 
   // Always expose the top six impressions in descending score order.
-  // This makes the ranking legible even when the lower entries are weaker.
   const visibleItems=impression.sorted.slice(0,Math.min(6,impression.sorted.length));
 
   visibleItems.forEach(([name,score],rank)=>{
     const pct=Math.round(score*100), row=document.createElement('div');
-    row.className='analysisBarRow impressionRow';
+    row.className='analysisBarRow impressionRow rankedAnalysisRow';
     row.innerHTML=`
-      <div class="bilingualLabel">
-        <span class="labelEn"><span class="impressionRank">${rank+1}</span>${name}</span>
+      <div class="rankingNumber">${rank+1}</div>
+      <div class="bilingualLabel rankingLabel">
+        <span class="labelEn">${name}</span>
         <span class="labelJa">${impressionJa(name)}</span>
       </div>
       <div class="track"><div class="fill impressionFill" data-target="${pct}" style="--fill-scale:0"></div></div>
@@ -7895,6 +10387,7 @@ function analyze(img,token=analysisRunToken){
   };
 
   renderExportSummary(palette,roleMap,relationship,confidence);
+  renderSimilarImageSearch(currentAnalysisData);
 
   const summaryText=describeTone({
     imageStats,
@@ -7903,7 +10396,8 @@ function analyze(img,token=analysisRunToken){
     impression,
     relationship,
     balance,
-    palette
+    palette,
+    confidence
   });
 
   document.getElementById('tonePrimary').classList.remove('reveal-text');
@@ -7914,6 +10408,7 @@ function analyze(img,token=analysisRunToken){
   document.getElementById('tonePrimaryJa').textContent=toneJa(mainTone);
   document.getElementById('toneSecondary').textContent=secondaryTone;
   document.getElementById('toneSecondaryJa').textContent=secondaryTone ? toneJa(secondaryTone) : '—';
+  renderToneDiagram(mainTone);
   document.getElementById('toneName').textContent=mainTone;
   document.getElementById('toneNameJa').textContent=toneJa(mainTone);
   document.getElementById('toneScore').textContent='No image';
@@ -8555,7 +11050,10 @@ function renderRoleBoard(roleMap, palette, rawCount, balance){
     </div>
 
     <div class="allSwatches">
-      <div class="allSwatchesLabel">Merged Palette <span class="allSwatchesJa">統合パレット</span> — ${rawCount} clusters → ${palette.length} colors</div>
+      <div class="allSwatchesLabel">
+        Merged Palette <span class="allSwatchesJa">統合パレット</span> — ${rawCount} clusters → ${palette.length} colors
+        <span class="paletteCopyHint">CLICK TO COPY HEX <span>/</span> クリックでカラーコードをコピー</span>
+      </div>
       <div class="swatchRow">
         ${palette.map(c => miniSwatch(c)).join('')}
       </div>
@@ -8615,12 +11113,20 @@ function balanceMetaItem(label, value){
 }
 
 function roleCard(label, labelJa, color, hint){
+  const hex=String(color.hex||'').toUpperCase();
   return `
     <div class="roleCard">
-      <div class="roleSwatch" style="background:${color.hex}"></div>
+      <button
+        type="button"
+        class="roleSwatch roleCopySwatch"
+        style="background:${hex}"
+        data-copy-hex="${hex}"
+        aria-label="${label} ${hex} をコピー"
+        title="${hex} をコピー"
+      ></button>
       <div class="roleBody">
         <div class="roleLabel">${label}<span class="roleLabelJa">${labelJa}</span></div>
-        <div class="roleHex">${color.hex}</div>
+        <div class="roleHex">${hex}</div>
         ${japaneseColorNameHtml(color)}
         <div class="roleMeta">構成比 ${Math.round(color.share*100)}% ・ 明度 ${Math.round(color.hsv.v*100)}% ・ 彩度 ${Math.round(color.hsv.s*100)}%</div>
         <div class="roleHint">${hint}<br>${color.reason}</div>
@@ -8670,15 +11176,97 @@ function donutSegmentPath(cx, cy, rOuter, rInner, start, end){
 }
 
 function miniSwatch(color){
+  const hex=String(color.hex||'').toUpperCase();
   return `
-    <div class="miniSwatch">
-      <div class="miniBox" style="background:${color.hex}"></div>
-      <div class="miniHex">${color.hex}</div>
+    <button
+      type="button"
+      class="miniSwatch paletteCopySwatch"
+      data-copy-hex="${hex}"
+      aria-label="${hex} をコピー"
+      title="${hex} をコピー"
+    >
+      <div class="miniBox" style="background:${hex}"></div>
+      <div class="miniHex">${hex}</div>
       ${japaneseColorNameHtml(color, true)}
       <div class="miniPct">${Math.round(color.share*100)}%</div>
-    </div>
+    </button>
   `;
 }
+
+
+function fallbackCopyText(text){
+  const textarea=document.createElement('textarea');
+  textarea.value=text;
+  textarea.setAttribute('readonly','');
+  textarea.setAttribute('aria-hidden','true');
+  textarea.style.position='fixed';
+  textarea.style.left='-9999px';
+  textarea.style.top='0';
+  textarea.style.opacity='0';
+  document.body.appendChild(textarea);
+
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0,textarea.value.length);
+
+  let copied=false;
+  try{
+    copied=document.execCommand('copy');
+  }catch(_){
+    copied=false;
+  }
+
+  textarea.remove();
+  return copied;
+}
+
+async function copyPaletteHex(hex){
+  const text=String(hex||'').trim().toUpperCase();
+  if(!/^#[0-9A-F]{6}$/.test(text)) return false;
+
+  if(navigator.clipboard && window.isSecureContext){
+    try{
+      await navigator.clipboard.writeText(text);
+      return true;
+    }catch(_){
+      // Fall through to the local-file-friendly fallback.
+    }
+  }
+
+  return fallbackCopyText(text);
+}
+
+let paletteCopyFeedbackTimer=null;
+
+function showPaletteCopyFeedback(swatch,hex,success){
+  if(!swatch) return;
+
+  document.querySelectorAll(
+    '.paletteCopySwatch.is-copied,.paletteCopySwatch.copy-failed,'+
+    '.roleCopySwatch.is-copied,.roleCopySwatch.copy-failed'
+  ).forEach(el=>el.classList.remove('is-copied','copy-failed'));
+
+  swatch.dataset.copyFeedback=success ? `COPIED ${hex}` : 'COPY FAILED';
+  swatch.classList.add(success?'is-copied':'copy-failed');
+
+  if(paletteCopyFeedbackTimer) clearTimeout(paletteCopyFeedbackTimer);
+  paletteCopyFeedbackTimer=setTimeout(()=>{
+    if(!swatch.isConnected) return;
+    swatch.classList.remove('is-copied','copy-failed');
+    delete swatch.dataset.copyFeedback;
+  },1250);
+}
+
+document.addEventListener('click',async event=>{
+  const swatch=event.target.closest?.(
+    '.paletteCopySwatch[data-copy-hex], .roleCopySwatch[data-copy-hex]'
+  );
+  if(!swatch) return;
+
+  const hex=swatch.dataset.copyHex;
+  const success=await copyPaletteHex(hex);
+  showPaletteCopyFeedback(swatch,hex,success);
+});
 
 function setMetric(key, value, isWarm=false, delay=0){
   const ids = {
@@ -8711,16 +11299,180 @@ function setMetric(key, value, isWarm=false, delay=0){
   scheduleBarAnimation(bar, pct, delay);
 }
 
+
+
+const IMPRESSION_REFERENCE_TEXT={
+  'Cool':'青・紫寄りの澄んだ色が、涼しさと透明感を感じさせます。',
+  'Warm':'赤・橙・黄の暖色が、親しみとぬくもりを感じさせます。',
+  'Cute':'淡いピンクやパステルが、軽く愛らしい雰囲気を作ります。',
+  'Calm':'低コントラストの穏やかな色が、静かで落ち着いた印象を作ります。',
+  'Elegant':'紫や青を中心とした整った色が、上品で気品ある印象を作ります。',
+  'Energetic':'鮮やかな赤・橙・黄が、勢いと活発さを強く感じさせます。',
+  'Natural':'緑や土色の自然な色が、素直でやわらかな印象を作ります。',
+  'Moody':'暗い青紫や灰みの色が、静かな深みと余韻を感じさせます。',
+  'Fresh':'明るい水色や黄緑が、爽やかでみずみずしい印象を作ります。',
+  'Dreamy':'淡い紫・ピンク・水色が、やわらかな幻想感を感じさせます。',
+  'Luxurious':'深い紫や紺、金系の色が、華やかさと高級感を強めます。',
+  'Minimal':'無彩色と少ない色数が、簡潔で静かな印象を作ります。',
+  'Retro':'少しくすんだ暖色が、懐かしく味わいのある印象を作ります。',
+  'Mysterious':'暗い青紫や深緑が、神秘的で奥行きある雰囲気を作ります。',
+  'Romantic':'ローズや赤紫の柔らかな色が、情緒的で甘い印象を作ります。',
+  'Playful':'明るい多色配色が、自由で弾むような楽しさを感じさせます。',
+  'Serious':'暗く引き締まった色が、重みと信頼感のある印象を作ります。',
+  'Refined':'抑えた彩度と整った配色が、洗練された印象を作ります。'
+};
+
+const IMPRESSION_VISUAL_DEFS={
+  'Cool':{hues:[190,205,220,235,250,268,285,300], s:.60, l:.60},
+  'Warm':{hues:[350,8,20,32,45,58,28,12], s:.66, l:.61},
+  'Cute':{hues:[330,344,356,18,35,55,288,250], s:.58, l:.75},
+  'Calm':{hues:[165,180,195,210,225,140,155,205], s:.34, l:.62},
+  'Elegant':{hues:[285,300,320,220,235,250,42,18], s:.42, l:.57},
+  'Energetic':{hues:[8,20,34,48,62,18,350,78], s:.76, l:.57},
+  'Natural':{hues:[78,92,110,128,142,38,50,24], s:.40, l:.55},
+  'Moody':{hues:[258,272,286,220,235,320,188,340], s:.34, l:.36},
+  'Fresh':{hues:[178,190,202,214,98,114,126,60], s:.56, l:.68},
+  'Dreamy':{hues:[255,270,285,302,320,210,195,340], s:.44, l:.75},
+  'Luxurious':{hues:[275,290,310,225,245,42,52,340], s:.56, l:.43},
+  'Minimal':{hues:[210,220,230,0,20,40,190,250], s:.10, l:.72},
+  'Retro':{hues:[18,35,52,78,155,178,200,345], s:.48, l:.56},
+  'Mysterious':{hues:[265,282,300,226,205,170,330,245], s:.44, l:.39},
+  'Romantic':{hues:[336,350,2,320,300,18,36,280], s:.56, l:.66},
+  'Playful':{hues:[350,20,48,78,118,178,210,258,300,330], s:.74, l:.58},
+  'Serious':{hues:[225,238,252,12,28,210,340,48], s:.24, l:.33},
+  'Refined':{hues:[220,235,250,205,180,36,16,290], s:.28, l:.58}
+};
+
+function createReferenceWheelSvg(sampleHexes, segmentClass='toneHueSegment', guideClass='toneHueGuide', innerGuideClass='toneHueInnerGuide'){
+  const size=250,cx=125,cy=125;
+  const total=Math.max(1,sampleHexes.length);
+  const ring=sampleHexes.map((hex,index)=>{
+    const a0=-Math.PI/2+(index/total)*Math.PI*2;
+    const a1=-Math.PI/2+((index+1)/total)*Math.PI*2+.002;
+    return `<path class="${segmentClass}" d="${donutSegmentPath(cx,cy,105,78,a0,a1)}" fill="${hex}"></path>`;
+  }).join('');
+  return `
+    <svg viewBox="0 0 ${size} ${size}" role="img" aria-hidden="true">
+      <g>${ring}</g>
+      <circle class="${guideClass}" cx="${cx}" cy="${cy}" r="72"></circle>
+      <circle class="${innerGuideClass}" cx="${cx}" cy="${cy}" r="58"></circle>
+    </svg>`;
+}
+
+function buildImpressionSampleHexes(name){
+  const def=IMPRESSION_VISUAL_DEFS[name] || IMPRESSION_VISUAL_DEFS['Refined'];
+  return def.hues.map(h=>`hsl(${h} ${Math.round(def.s*100)}% ${Math.round(def.l*100)}%)`);
+}
+
+function resetImpressionGuide(){
+  const caption=document.getElementById('impressionPrimaryGuideCaption');
+  if(caption) caption.textContent='解析後に該当する印象の特徴を表示します。';
+}
+
+function renderImpressionGuide(name){
+  const caption=document.getElementById('impressionPrimaryGuideCaption');
+  if(caption) caption.textContent=IMPRESSION_REFERENCE_TEXT[name] || `${impressionJa(name)}と受け取られやすい印象です。`;
+}
+
+const TONE_IMAGE_DEFS={
+  'Very Pale':{c:.06,l:.95},
+  'Pale':{c:.16,l:.87},
+  'Light':{c:.32,l:.82},
+  'Bright':{c:.54,l:.76},
+  'Vivid':{c:.66,l:.62},
+  'Strong':{c:.59,l:.57},
+  'Deep':{c:.52,l:.40},
+  'Dark':{c:.39,l:.27},
+  'Very Dark':{c:.15,l:.15},
+  'Pale Grayish':{c:.06,l:.75},
+  'Light Grayish':{c:.12,l:.63},
+  'Middle Grayish':{c:.12,l:.49},
+  'Grayish':{c:.17,l:.38},
+  'Dark Grayish':{c:.15,l:.27},
+  'Very Grayish':{c:.07,l:.34},
+  'Soft':{c:.35,l:.64},
+  'Dull':{c:.32,l:.45}
+};
+
+const TONE_WHEEL_DISPLAY_DEFS={
+  'Very Pale':{s:44,l:86},
+  'Pale':{s:52,l:79},
+  'Light':{s:68,l:69},
+  'Bright':{s:84,l:61},
+  'Vivid':{s:96,l:52},
+  'Strong':{s:84,l:46},
+  'Deep':{s:82,l:35},
+  'Dark':{s:66,l:28},
+  'Very Dark':{s:58,l:22},
+  'Pale Grayish':{s:22,l:80},
+  'Light Grayish':{s:26,l:68},
+  'Middle Grayish':{s:22,l:56},
+  'Grayish':{s:28,l:47},
+  'Dark Grayish':{s:24,l:34},
+  'Very Grayish':{s:16,l:42},
+  'Soft':{s:60,l:61},
+  'Dull':{s:48,l:43}
+};
+
+const TONE_REFERENCE_TEXT={
+  'Very Pale':'非常に明るく淡い、白に近い繊細な色調です。',
+  'Pale':'明るく淡い、やさしいパステル調の色合いです。',
+  'Light':'明るさと色みを両立した、軽快で爽やかな色調です。',
+  'Bright':'明るく鮮やかで、軽快さと活気のある色調です。',
+  'Vivid':'純色に近い高彩度で、強く目を引く鮮烈な色調です。',
+  'Strong':'濃く鮮やかで、力強く存在感のある色調です。',
+  'Deep':'暗めで彩度が高く、深く豊かな色調です。',
+  'Dark':'暗めで落ち着きがあり、重さを感じる色調です。',
+  'Very Dark':'黒に近い非常に暗い、重厚で静かな色調です。',
+  'Pale Grayish':'明るく灰みを含んだ、淡く静かな色調です。',
+  'Light Grayish':'やや明るく灰みを帯びた、柔らかな色調です。',
+  'Middle Grayish':'中明度で灰みが強い、穏やかな色調です。',
+  'Grayish':'彩度を抑えた灰みのある、渋く静かな色調です。',
+  'Dark Grayish':'暗く灰みを帯びた、硬く重めの色調です。',
+  'Very Grayish':'ほぼ無彩色に近い、強く抑えた色調です。',
+  'Soft':'やわらかな明るさと中彩度を持つ、優しい色調です。',
+  'Dull':'彩度を抑えた中明度の、渋く落ち着いた色調です。'
+};
+
+function toneImageDefinition(name){
+  return TONE_IMAGE_DEFS[name] || {c:.28,l:.56};
+}
+
+function buildToneSampleHexes(toneName){
+  const def=TONE_WHEEL_DISPLAY_DEFS[toneName] || {s:60,l:56};
+  const hues=[0,30,60,90,120,150,180,210,240,270,300,330];
+  return hues.map(h=>`hsl(${h} ${def.s}% ${def.l}%)`);
+}
+
+function resetToneDiagram(){
+  const wheel=document.getElementById('toneReferenceWheel');
+  const caption=document.getElementById('tonePrimaryGuideCaption');
+  if(caption) caption.textContent='解析後に該当トーンの色合いイメージを表示します。';
+  if(wheel){
+    wheel.innerHTML=`<div class="toneReferenceCenter"><strong id="toneDiagramName">—</strong><span id="toneDiagramNameJa">—</span></div>`;
+  }
+}
+
+function renderToneDiagram(toneName){
+  const wheel=document.getElementById('toneReferenceWheel');
+  const caption=document.getElementById('tonePrimaryGuideCaption');
+  if(caption) caption.textContent=TONE_REFERENCE_TEXT[toneName] || `${toneJa(toneName)}の代表的な色合いです。`;
+  if(!wheel) return;
+  const svg=createReferenceWheelSvg(buildToneSampleHexes(toneName),'toneHueSegment','toneHueGuide','toneHueInnerGuide');
+  wheel.innerHTML=`${svg}<div class="toneReferenceCenter"><strong id="toneDiagramName">${toneName}</strong><span id="toneDiagramNameJa">${toneJa(toneName)}</span></div>`;
+}
+
 function renderToneBars(items){
   const wrap=document.getElementById('toneBars');
   wrap.innerHTML='';
   items.slice(0,6).forEach(([name,score],rank)=>{
     const pct=Math.round(score*100);
     const row=document.createElement('div');
-    row.className='analysisBarRow toneRow';
+    row.className='analysisBarRow toneRow rankedAnalysisRow';
     row.innerHTML=`
-      <div class="bilingualLabel">
-        <span class="labelEn"><span class="toneRank impressionRank">${rank+1}</span>${name}</span>
+      <div class="rankingNumber">${rank+1}</div>
+      <div class="bilingualLabel rankingLabel">
+        <span class="labelEn">${name}</span>
         <span class="labelJa">${toneJa(name)}</span>
       </div>
       <div class="track"><div class="fill toneFill" data-target="${pct}" style="--fill-scale:0"></div></div>
@@ -8730,127 +11482,71 @@ function renderToneBars(items){
   });
 }
 
-function describeTone({imageStats,toneResult,roleMap,impression,relationship,balance,palette}){
+function describeTone({imageStats,toneResult,roleMap,impression,relationship,balance,palette,confidence}){
   const pct=v=>Math.round(clamp01(v)*100);
 
   const colorLabel=color=>{
     if(!color) return '—';
     const ja=color.japaneseName;
     if(!ja) return color.hex;
-    const prefix=ja.approximate ? '近似和名：' : '';
-    return `${color.hex}（${prefix}${ja.name}）`;
-  };
-
-  const saturationPhrase=s=>{
-    if(s>=.74) return '非常に高い彩度';
-    if(s>=.56) return '高めの彩度';
-    if(s>=.37) return '中程度の彩度';
-    if(s>=.20) return '低めの彩度';
-    return 'かなり抑えた彩度';
-  };
-
-  const brightnessPhrase=v=>{
-    if(v>=.84) return '非常に明るい明度';
-    if(v>=.67) return '明るめの明度';
-    if(v>=.43) return '中程度の明度';
-    if(v>=.25) return '暗めの明度';
-    return 'かなり暗い明度';
-  };
-
-  const contrastPhrase=c=>{
-    if(c>=.66) return 'コントラストはかなり強く';
-    if(c>=.48) return 'コントラストはやや強く';
-    if(c>=.30) return 'コントラストは中程度で';
-    if(c>=.16) return 'コントラストは穏やかで';
-    return 'コントラストはかなり柔らかく';
-  };
-
-  const temperaturePhrase=w=>{
-    if(w>=.72) return '明確に暖色寄り';
-    if(w>=.59) return 'やや暖色寄り';
-    if(w<=.28) return '明確に寒色寄り';
-    if(w<=.41) return 'やや寒色寄り';
-    return '暖色と寒色の偏りは小さめ';
+    return `${color.hex}（${ja.approximate?'近似和名：':''}${ja.name}）`;
   };
 
   const toneTop=toneResult.sorted?.[0] || [toneResult.name,toneResult.score||0];
-  const toneSecond=toneResult.sorted?.[1] || null;
-  const toneGap=toneSecond ? toneTop[1]-toneSecond[1] : toneTop[1];
-
-  let toneSentence='';
-  if(toneResult.score>=.70 && toneGap>=.10){
-    toneSentence=`全体のカラートーンは ${toneResult.name}（${toneJa(toneResult.name)}）の特徴が明確です。`;
-  }else if(toneSecond && toneGap<.055){
-    toneSentence=`全体のカラートーンは ${toneResult.name}（${toneJa(toneResult.name)}）を中心に、${toneSecond[0]}（${toneJa(toneSecond[0])}）の性質も近く現れています。`;
-  }else{
-    toneSentence=`全体のカラートーンは ${toneResult.name}（${toneJa(toneResult.name)}）寄りと判定されます。`;
-  }
+  const impTop=impression.sorted?.[0] || [impression.primary,impression.score||0];
+  const impSecond=impression.sorted?.[1] || [impression.secondary,0];
+  const impThird=impression.sorted?.[2] || null;
 
   const displayedSaturation=clamp01(
     imageStats.toneS*.58+
     (toneResult.saturationEvidence??imageStats.toneS)*.42
   );
-  const tonalSentence=`${saturationPhrase(displayedSaturation)}と${brightnessPhrase(imageStats.toneV)}を持ち、${contrastPhrase(imageStats.contrast)}、色温度は${temperaturePhrase(imageStats.warmth)}です。`;
 
-  const impTop=impression.sorted?.[0] || [impression.primary,impression.score||0];
-  const impSecond=impression.sorted?.[1] || [impression.secondary,0];
-  const impThird=impression.sorted?.[2] || null;
-  const impGap=impTop[1]-impSecond[1];
+  const satPct=pct(displayedSaturation);
+  const valPct=pct(imageStats.toneV);
+  const conPct=pct(imageStats.contrast);
+  const warmPct=pct(imageStats.warmth);
 
-  let impressionSentence='';
-  if(impTop[1]<.38){
-    impressionSentence=`印象面では特定のイメージに強く偏らず、${impTop[0]}（${impressionJa(impTop[0])}）と${impSecond[0]}（${impressionJa(impSecond[0])}）が比較的近い傾向です。`;
-  }else if(impGap<.055){
-    impressionSentence=`主観的な印象は ${impTop[0]}（${impressionJa(impTop[0])}）と${impSecond[0]}（${impressionJa(impSecond[0])}）がほぼ拮抗しています。`;
-  }else if(impTop[1]>=.62){
-    impressionSentence=`主観的な印象では ${impTop[0]}（${impressionJa(impTop[0])}）が強く、次いで ${impSecond[0]}（${impressionJa(impSecond[0])}）が現れています。`;
-  }else{
-    impressionSentence=`主観的な印象は ${impTop[0]}（${impressionJa(impTop[0])}）がやや優勢で、${impSecond[0]}（${impressionJa(impSecond[0])}）も併存しています。`;
-  }
+  const satText = satPct>=72 ? 'かなり高い彩度' : satPct>=56 ? 'やや高めの彩度' : satPct>=38 ? '中程度の彩度' : satPct>=24 ? 'かなり抑えた彩度' : '非常に抑えた彩度';
+  const valText = valPct>=82 ? '非常に明るい明度' : valPct>=68 ? '明るい明度' : valPct>=50 ? '中程度の明度' : valPct>=34 ? 'やや低い明度' : 'かなり低い明度';
+  const conText = conPct>=66 ? 'コントラストは明確です' : conPct>=44 ? 'コントラストは中程度です' : 'コントラストは穏やかです';
+  const tempText = warmPct>=62 ? '色温度は明確に暖色寄りです' : warmPct>=54 ? '色温度はやや暖色寄りです' : warmPct<=38 ? '色温度は明確に寒色寄りです' : warmPct<=46 ? '色温度はやや寒色寄りです' : '色温度の偏りは小さめです';
 
-  if(impThird && Math.abs(impSecond[1]-impThird[1])<.025 && impThird[1]>.34){
-    impressionSentence=impressionSentence.replace(/。$/,'') + `。また、${impThird[0]}（${impressionJa(impThird[0])}）も近い強さで検出されています。`;
-  }
+  const impressionItems=[impTop,impSecond,impThird].filter(Boolean);
+  const impressionSentence=impressionItems.map((item,index)=>{
+    const [name]=item;
+    const label=`${name}（${impressionJa(name)}）`;
+    if(index===0) return `${label}が強く`;
+    if(index===1) return `次いで ${label} が現れています`;
+    return `また、${label} も近い強さで検出されています`;
+  }).join('、').replace('、また、','。また、');
 
   const base=roleMap.base;
   const accent=roleMap.accent;
-  const baseShare=pct(base.share);
+  const sub=roleMap.sub;
+  const neutral=roleMap.neutral;
   const accentShare=pct(accent.share);
-  const delta=accent.roleAnalysis?.baseDeltaE ?? deltaE2000(base.lab,accent.lab);
+  const baseAccentDelta=relationship?.pair?.delta ?? deltaE2000(base.lab,accent.lab);
+  const hueDiff=relationship?.pair?.hueDiff ?? circularHueDistance(getColorDerived(base).oklabHue,getColorDerived(accent).oklabHue);
 
-  let relation='';
-  if(delta>=45) relation='ベースとの差が非常に大きく、明確な差し色として機能しています';
-  else if(delta>=30) relation='ベースから十分に離れており、視線を引く差し色になっています';
-  else if(delta>=18) relation='ベースとの違いは適度で、全体になじみながら変化を加えています';
-  else if(delta>=10) relation='ベースに比較的近く、控えめなアクセントとして働いています';
-  else relation='ベースとの色差が小さく、アクセントも同系色でまとめられています';
+  let accentText='視線を引く差し色になっています';
+  if(accentShare===0) accentText='面積はごく小さいものの、視線を引く差し色として機能しています';
+  else if(baseAccentDelta<12) accentText='ベースに近い色差で、穏やかな変化を添える差し色になっています';
+  else if(baseAccentDelta<24) accentText='ベースから適度に離れ、全体に変化を加える差し色になっています';
 
-  const colorSentence=`配色の基調は ${colorLabel(base)}（構成比約${baseShare}%）で、アクセントには ${colorLabel(accent)}（約${accentShare}%）が選ばれています。${relation}。`;
+  const diversity=pct(balance?.diversity||0);
+  const diversityText = diversity>=72 ? '色の種類は多めです' : diversity>=45 ? '色数と統一感のバランスが取れています' : '色数は絞られており統一感が強めです';
 
-  const diversity=balance?.diversity ?? 0;
-  const count=palette?.length || 0;
-  let paletteSentence='';
-  if(diversity>=.72){
-    paletteSentence=`統合後も${count}色が残る多彩なパレットで、色の変化が大きい構成です。`;
-  }else if(diversity<=.28){
-    paletteSentence=`統合後のパレットは${count}色で、色相や明度を絞った統一感の強い構成です。`;
-  }else if(count>=10){
-    paletteSentence=`統合後は${count}色で構成され、ある程度の色数を保ちながら全体のまとまりもあります。`;
-  }
+  const chromaticShare=pct(relationship?.chromaticShare||0);
+  const relationshipSentence = relationship?.name
+    ? `配色構造は ${relationship.name}（${relationship.nameJa}）の特徴が比較的明確で、主要色どうしの色相差は約${Math.round(hueDiff)}°、有彩色の比率は約${chromaticShare}%です。`
+    : '';
 
-  let relationshipSentence='';
-  if(relationship){
-    const relConf=relationship.confidence||0;
-    if(relConf>=.70){
-      relationshipSentence=`配色構造は ${relationship.name}（${relationship.nameJa}）の特徴が比較的明確です。`;
-    }else{
-      relationshipSentence=`配色構造は ${relationship.name}（${relationship.nameJa}）寄りですが、複数の色相関係が混在しています。`;
-    }
-  }
+  const confidenceSentence = confidence
+    ? `分析全体の確信度は ${pct(confidence.overall)}% です。`
+    : '';
 
-  return [toneSentence,tonalSentence,impressionSentence,colorSentence,relationshipSentence,paletteSentence]
-    .filter(Boolean)
-    .join(' ');
+  return `全体のカラートーンは ${toneTop[0]}（${toneJa(toneTop[0])}）寄りと判定されます。 ${satText}と${valText}を持ち、${conText}。 ${tempText}。 主観的な印象では ${impressionSentence}。 配色の基調は ${colorLabel(base)}（構成比約${pct(base.share)}%）で、補助色には ${colorLabel(sub)}（約${pct(sub.share)}%）、無彩色の支えとして ${colorLabel(neutral)}（約${pct(neutral.share)}%）が見られます。 アクセントには ${colorLabel(accent)}（約${accentShare}%）が選ばれており、ベースとの知覚色差は ΔE00 ${baseAccentDelta.toFixed(1)} で、${accentText}。 ${relationshipSentence} ${diversityText} ${confidenceSentence}`.replace(/\s+/g,' ').trim();
 }
 
 function rgbToHsv(r,g,b){
@@ -8866,6 +11562,25 @@ function rgbToHsv(r,g,b){
   if(h<0) h+=360;
   const s=max===0?0:d/max;
   return {h,s,v:max};
+}
+
+/* v114 hot-path helper: same HSV math, but reuses one output array for raw 8-bit pixels. */
+function rgb8ToHsvInto(r,g,b,out){
+  r=RGB01_8BIT[r];
+  g=RGB01_8BIT[g];
+  b=RGB01_8BIT[b];
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  const d=max-min;
+  let h=0;
+  if(d!==0){
+    if(max===r) h=60*(((g-b)/d)%6);
+    else if(max===g) h=60*(((b-r)/d)+2);
+    else h=60*(((r-g)/d)+4);
+  }
+  if(h<0) h+=360;
+  out[0]=h;
+  out[1]=max===0?0:d/max;
+  out[2]=max;
 }
 
 function enrichColor(c){
@@ -8898,16 +11613,20 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
   if(!palette?.length || !features?.n) return palette||[];
 
   let working=palette.map(c=>({...c}));
+  const coords=features.okLab;
+  const weights=features.clusterWeight;
+  const featureCount=features.n;
 
   for(let it=0;it<iterations;it++){
     const k=working.length;
     const centers=working.map(c=>c.oklab||rgbToOklab(...c.center));
     const sums=new Float64Array(k*4);
 
-    for(let p=0;p<features.n;p++){
-      const L=features.okLab[p*3];
-      const a=features.okLab[p*3+1];
-      const b=features.okLab[p*3+2];
+    for(let p=0;p<featureCount;p++){
+      const base3=p*3;
+      const L=coords[base3];
+      const a=coords[base3+1];
+      const b=coords[base3+2];
 
       let best=0,bestD=Infinity;
       for(let j=0;j<k;j++){
@@ -8920,7 +11639,7 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
         }
       }
 
-      const wt=features.clusterWeight?.[p]??1;
+      const wt=weights?.[p]??1;
       const base=best*4;
       sums[base]+=L*wt;
       sums[base+1]+=a*wt;
@@ -9090,6 +11809,11 @@ function analyzePaletteSpatialStats(palette,features){
   const result=new Map();
   if(!palette.length || !features?.n) return result;
 
+  const coords=features.okLab;
+  const xValues=features.nx;
+  const yValues=features.ny;
+  const edgeValues=features.edgeStrength;
+  const featureCount=features.n;
   const gridX=6,gridY=4,gridN=gridX*gridY;
   const stats=palette.map(c=>({
     color:c,
@@ -9106,10 +11830,11 @@ function analyzePaletteSpatialStats(palette,features){
 
   const centers=palette.map(c=>c.oklab||rgbToOklab(...c.center));
 
-  for(let p=0;p<features.n;p++){
-    const L=features.okLab[p*3];
-    const a=features.okLab[p*3+1];
-    const b=features.okLab[p*3+2];
+  for(let p=0;p<featureCount;p++){
+    const base3=p*3;
+    const L=coords[base3];
+    const a=coords[base3+1];
+    const b=coords[base3+2];
 
     let best=0,bestD=Infinity;
     for(let j=0;j<centers.length;j++){
@@ -9123,8 +11848,8 @@ function analyzePaletteSpatialStats(palette,features){
       }
     }
 
-    const x=features.nx[p],y=features.ny[p];
-    const localEdge=features.edgeStrength?.[p]??0;
+    const x=xValues[p],y=yValues[p];
+    const localEdge=edgeValues?.[p]??0;
     const s=stats[best];
 
     s.count++;
@@ -9897,7 +12622,9 @@ function findJapaneseColorName(rgb){
 
 function japaneseColorNameHtml(color, compact=false){
   const info=color.japaneseName || findJapaneseColorName(color.center);
-  if(!info) return '';
+  if(!info){
+    return compact ? '<div class="miniName miniNameEmpty" aria-hidden="true">&nbsp;</div>' : '';
+  }
 
   if(compact){
     const cls=info.approximate ? 'miniName isApprox' : 'miniName';
@@ -10113,6 +12840,33 @@ function srgbToLinear01(x){
   return x<=.04045 ? x/12.92 : Math.pow((x+.055)/1.055,2.4);
 }
 
+/*
+  v114 raw-pixel lookup tables.
+  Values are generated with the same formulas used before, so analysis output stays unchanged
+  while repeated per-pixel divisions / sRGB gamma Math.pow calls are avoided.
+*/
+const RGB01_8BIT=Float64Array.from({length:256},(_,i)=>i/255);
+const SRGB_LINEAR_8BIT=Float64Array.from({length:256},(_,i)=>srgbToLinear01(i));
+const LUMA_R_8BIT=Float64Array.from({length:256},(_,i)=>.2126*i);
+const LUMA_G_8BIT=Float64Array.from({length:256},(_,i)=>.7152*i);
+const LUMA_B_8BIT=Float64Array.from({length:256},(_,i)=>.0722*i);
+
+function rgb8ToOklabInto(r,g,b,out){
+  const R=SRGB_LINEAR_8BIT[r];
+  const G=SRGB_LINEAR_8BIT[g];
+  const B=SRGB_LINEAR_8BIT[b];
+
+  const l=.4122214708*R+.5363325363*G+.0514459929*B;
+  const m=.2119034982*R+.6806995451*G+.1073969566*B;
+  const s=.0883024619*R+.2817188376*G+.6299787005*B;
+
+  const l_=Math.cbrt(l), m_=Math.cbrt(m), s_=Math.cbrt(s);
+
+  out[0]=.2104542553*l_+.7936177850*m_-.0040720468*s_;
+  out[1]=1.9779984951*l_-2.4285922050*m_+.4505937099*s_;
+  out[2]=.0259040371*l_+.7827717662*m_-.8086757660*s_;
+}
+
 function linearToSrgb255(x){
   x=Math.max(0,Math.min(1,x));
   const s=x<=.0031308 ? 12.92*x : 1.055*Math.pow(x,1/2.4)-.055;
@@ -10191,6 +12945,7 @@ function kmeans(features,k,iterations=16){
   };
 
   const coords=features.okLab;
+  const weights=features.clusterWeight;
   const centers=[];
   const nearestD=new Float64Array(sampleCount);
   nearestD.fill(Infinity);
@@ -10213,7 +12968,7 @@ function kmeans(features,k,iterations=16){
       const d=dx*dx+dy*dy+dz*dz;
 
       if(d<nearestD[s]) nearestD[s]=d;
-      total+=nearestD[s]*(features.clusterWeight?.[idx]??1);
+      total+=nearestD[s]*(weights?.[idx]??1);
     }
 
     if(total<=1e-14) break;
@@ -10223,7 +12978,7 @@ function kmeans(features,k,iterations=16){
 
     for(let s=0;s<sampleCount;s++){
       const idx=sampleIndices[s];
-      target-=nearestD[s]*(features.clusterWeight?.[idx]??1);
+      target-=nearestD[s]*(weights?.[idx]??1);
       if(target<=0){
         chosenPos=s;
         break;
@@ -10251,7 +13006,7 @@ function kmeans(features,k,iterations=16){
     for(let s=0;s<sampleCount;s++){
       const idx=sampleIndices[s];
       const x=coords[idx*3],y=coords[idx*3+1],z=coords[idx*3+2];
-      const wt=features.clusterWeight?.[idx]??1;
+      const wt=weights?.[idx]??1;
 
       let best=0,bestD=Infinity;
       for(let j=0;j<k;j++){
@@ -10300,7 +13055,7 @@ function kmeans(features,k,iterations=16){
 
   for(let s=0;s<sampleCount;s++){
     const idx=sampleIndices[s];
-    const wt=features.clusterWeight?.[idx]??1;
+    const wt=weights?.[idx]??1;
     const j=assignments[s];
     const c=centers[j];
     const x=coords[idx*3],y=coords[idx*3+1],z=coords[idx*3+2];

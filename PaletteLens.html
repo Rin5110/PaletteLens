@@ -7537,6 +7537,15 @@
     }
   }
 
+
+
+  /* v148 — Shift+Click hint for Color Map */
+  .swatchHeaderCopyHint .hintDivider{
+    display:inline-block;
+    margin:0 8px;
+    opacity:.52;
+  }
+
 </style>
 </head>
 <body>
@@ -7591,7 +7600,7 @@
       <div class="panelHeader"><div class="panelTitle">
           <span class="headingMain">Tone Swatch Board — Palette Study</span>
           <span class="headingSub"><span class="headingJaSmall">配色パレット / 色彩構成</span></span>
-        </div><div class="swatchHeaderAside"><div class="swatchHeaderCopyHint">CLICK TO COPY HEX <span>/</span> クリックでカラーコードをコピー</div><div class="headerConfidence" id="rolesConfidence">CONFIDENCE —</div></div></div>
+        </div><div class="swatchHeaderAside"><div class="swatchHeaderCopyHint">CLICK TO COPY HEX <span>/</span> クリックでカラーコードをコピー <span class="hintDivider">|</span> SHIFT + CLICK FOR COLOR MAP <span>/</span> Shift+クリックでColor Map</div><div class="headerConfidence" id="rolesConfidence">CONFIDENCE —</div></div></div>
       <div class="rolePanel" id="rolePanel">
         <div class="empty">画像を読み込むと、多数の色を抽出し、似た色を自動統合して、役割・構成比・全体バランスを表示します。</div>
       </div>
@@ -8203,15 +8212,25 @@ dropZone.addEventListener('pointermove',event=>{
 dropZone.addEventListener('pointerleave',hidePixelColorChip);
 
 dropZone.addEventListener('click',async event=>{
-  // Refresh the sample at the exact click position before copying.
+  // Refresh the sample at the exact click position before acting.
   updatePixelColorChip(event);
   if(!currentPixelHex || !pixelColorChip?.classList.contains('visible')) return;
 
   // Keep a Color Map open while using the pixel inspector.
   event.stopPropagation();
 
-  const copiedHex=currentPixelHex;
-  const copied=await copyPaletteHex(copiedHex);
+  const activeHex=currentPixelHex;
+
+  if(event.shiftKey){
+    if(activeColorMapState?.hex === activeHex){
+      clearColorMap();
+    }else{
+      showColorMapForHex(activeHex);
+    }
+    return;
+  }
+
+  const copied=await copyPaletteHex(activeHex);
   if(copied){
     if(pixelCopyFeedbackTimer) clearTimeout(pixelCopyFeedbackTimer);
     pixelColorChip.classList.remove('copied','copy-confirmed');
@@ -8220,7 +8239,7 @@ dropZone.addEventListener('click',async event=>{
         pixelColorChip.classList.add('copied','copy-confirmed');
       }
     });
-    pixelColorHex.textContent=`COPIED ${copiedHex}`;
+    pixelColorHex.textContent=`COPIED ${activeHex}`;
     pixelCopyFeedbackTimer=setTimeout(()=>{
       pixelCopyFeedbackTimer=null;
       pixelColorChip?.classList.remove('copied','copy-confirmed');
@@ -8407,6 +8426,10 @@ function resetUI(){
   document.getElementById('impressionBars').innerHTML = '';
   resetImpressionGuide();
   resetAdvancedPanels();
+
+  // Ensure every persistent lower tab is visible after RESET, even if RESET
+  // was pressed mid-scroll or mid-animation.
+  clearResultRevealSystem();
 }
 
 function loadImage(file){
@@ -8848,8 +8871,30 @@ function clearResultRevealSystem(){
     resultRevealObserver.disconnect();
     resultRevealObserver=null;
   }
+
   resultRevealEntries.clear();
-  document.querySelectorAll('.scrollReveal.motion-active').forEach(el=>el.classList.remove('motion-active'));
+
+  // A reset can happen while some panels are still waiting for their
+  // IntersectionObserver reveal. In that state `.scrollReveal` intentionally
+  // makes them transparent. Remove every reveal-only class and delay so the
+  // persistent UI always returns to its normal visible state immediately.
+  document.querySelectorAll('.scrollReveal').forEach(el=>{
+    el.classList.remove(
+      'scrollReveal',
+      'motion-active',
+      'is-revealed',
+      'revealSoft',
+      'revealSmall',
+      'revealChart'
+    );
+    el.style.removeProperty('--reveal-delay');
+  });
+
+  // Defensive cleanup for elements whose motion class survived after their
+  // parent reveal class was replaced or removed dynamically.
+  document.querySelectorAll('.motion-active').forEach(el=>{
+    el.classList.remove('motion-active');
+  });
 }
 
 function ensureResultRevealObserver(){
@@ -12524,15 +12569,21 @@ document.addEventListener('click',async event=>{
   }
 
   const hex=String(swatch.dataset.copyHex||'').toUpperCase();
-  const togglingOff=!!activeColorMapState && activeColorMapState.hex===hex;
+
+  // Color Map is intentionally Shift+Click only.
+  if(event.shiftKey){
+    event.preventDefault();
+    if(activeColorMapState?.hex===hex){
+      clearColorMap();
+    }else{
+      showColorMapForHex(hex, swatch);
+    }
+    return;
+  }
+
+  // Normal click only copies the HEX code.
   const success=await copyPaletteHex(hex);
   showPaletteCopyFeedback(swatch,hex,success);
-
-  if(togglingOff){
-    clearColorMap();
-  }else{
-    showColorMapForHex(hex, swatch);
-  }
 });
 
 function setMetric(key, value, isWarm=false, delay=0){

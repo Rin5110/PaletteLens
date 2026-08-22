@@ -7116,6 +7116,427 @@
     }
   }
 
+
+
+  /* =========================================================
+     v121 — Color Map overlay for copied palette colours
+     ========================================================= */
+
+  #colorMapOverlay{
+    position:absolute;
+    left:0;
+    top:0;
+    width:0;
+    height:0;
+    opacity:0;
+    pointer-events:none;
+    z-index:2;
+    transition:opacity .18s ease;
+  }
+
+  #colorMapOverlay.visible{
+    opacity:1;
+  }
+
+  .dropInner.has-color-map #preview{
+    filter:grayscale(1) saturate(0) brightness(1.58) contrast(.54) opacity(.38);
+  }
+
+  .paletteCopySwatch.color-map-active .miniBox,
+  .roleCopySwatch.color-map-active{
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.58),
+      0 0 0 1px var(--detected-accent, var(--blue));
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    #colorMapOverlay{
+      transition:none !important;
+    }
+  }
+
+
+
+  /* v122 — Color Map overlay must remain visible even though the analysis canvas is hidden */
+  #colorMapOverlay{
+    display:block !important;
+  }
+
+
+
+  /* v123 — color map base-image grayscale + tighter overlay alignment */
+  #preview{
+    display:block;
+    vertical-align:top;
+  }
+
+  #colorMapOverlay{
+    image-rendering:auto;
+  }
+
+
+
+  /* =========================================================
+     v124 — true object-fit image bounds for Color Map
+     ========================================================= */
+
+  /* Do not let the empty <img> disturb the upload screen. */
+  #preview{
+    display:none !important;
+    vertical-align:top;
+  }
+
+  .dropInner.has-image #preview{
+    display:block !important;
+  }
+
+  #colorMapOverlay{
+    display:block !important;
+    transform:none !important;
+    transform-origin:top left;
+  }
+
+
+
+  /* v127 — hide bottom shadow together with scroll cue */
+  .dropInner.cue-dismissed::after{
+    opacity:0 !important;
+  }
+
+
+
+  /* v132 — nearby-colour Color Map with softer boundary */
+  #colorMapOverlay.visible{
+    filter:blur(.35px) drop-shadow(0 0 0.45px rgba(30,32,38,.26));
+  }
+
+
+
+  /* =========================================================
+     v136 — pixel color inspector
+     ========================================================= */
+
+  .pixelColorChip{
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:7;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 8px;
+    background:rgba(255,255,255,.94);
+    border:1px solid rgba(55,56,62,.20);
+    box-shadow:0 4px 14px rgba(30,31,36,.12);
+    color:#292a2f;
+    font-family:var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+    font-size:11px;
+    line-height:1;
+    letter-spacing:.02em;
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    visibility:hidden;
+    transform:translate3d(0,2px,0);
+    transition:opacity .10s ease, transform .10s ease, visibility 0s linear .10s;
+  }
+
+  .pixelColorChip.visible{
+    opacity:1;
+    visibility:visible;
+    transform:translate3d(0,0,0);
+    transition:opacity .10s ease, transform .10s ease;
+  }
+
+  .pixelColorSwatch{
+    width:13px;
+    height:13px;
+    flex:0 0 13px;
+    border:1px solid rgba(35,36,40,.20);
+    background:#000;
+  }
+
+  .pixelColorHex{
+    font-variant-numeric:tabular-nums;
+  }
+
+  @media (hover:none), (pointer:coarse){
+    .pixelColorChip{
+      display:none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .pixelColorChip{
+      transition:none !important;
+    }
+  }
+
+
+
+  .pixelColorChip.copied{
+    transform:translate3d(0,-2px,0) scale(1.035);
+    border-color:rgba(35,36,40,.38);
+    box-shadow:0 5px 17px rgba(30,31,36,.17);
+  }
+
+
+
+  /* =========================================================
+     v139 — clear Color Map mode frame
+     ========================================================= */
+
+  .imagePanel .dropInner{
+    transition:
+      box-shadow .18s ease,
+      outline-color .18s ease,
+      outline-offset .18s ease;
+  }
+
+  .imagePanel .dropInner.has-color-map{
+    outline:6px solid color-mix(in srgb, var(--detected-accent, var(--accent)) 82%, white 18%);
+    outline-offset:0;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.82),
+      0 12px 28px rgba(26,28,34,.09);
+  }
+
+  .imagePanel .dropInner.has-color-map::before{
+    content:"ColorMapMode\A画像の外をクリックで通常表示";
+    white-space:pre;
+    position:absolute;
+    right:7px;
+    bottom:7px;
+    z-index:8;
+    padding:9px 12px 8px;
+    background:rgba(255,255,255,.93);
+    border:1px solid color-mix(in srgb, var(--detected-accent, var(--accent)) 62%, rgba(45,46,52,.28));
+    color:color-mix(in srgb, var(--detected-accent, var(--accent)) 84%, #202126 16%);
+    font-family:var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+    font-size:13px;
+    line-height:1.45;
+    font-weight:650;
+    letter-spacing:.055em;
+    pointer-events:none;
+    box-shadow:0 4px 12px rgba(30,31,36,.11);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .imagePanel .dropInner{
+      transition:none !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v145 — UX polish pass
+     ========================================================= */
+
+  /* 3. The visible bitmap itself behaves like a color picker. */
+  .dropInner.has-image #preview{
+    cursor:crosshair;
+    transition:
+      filter .18s cubic-bezier(.22,1,.36,1),
+      opacity .18s ease;
+  }
+
+  /* 5. Color Map enters and exits with a short, restrained transition. */
+  #colorMapOverlay{
+    transition:
+      opacity .17s ease,
+      filter .17s ease !important;
+  }
+
+  /* 4. Analysis-in-progress line on the Tone Swatch Board header. */
+  .swatchPanel .panelHeader{
+    position:relative;
+    overflow:hidden;
+  }
+
+  .swatchPanel .panelHeader::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-1px;
+    width:34%;
+    height:2px;
+    pointer-events:none;
+    opacity:0;
+    transform:translateX(-125%);
+    background:linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--detected-accent, var(--accent)) 78%, white 22%) 25%,
+      color-mix(in srgb, var(--detected-accent, var(--accent)) 90%, #202126 10%) 52%,
+      color-mix(in srgb, var(--detected-accent, var(--accent)) 72%, white 28%) 78%,
+      transparent
+    );
+  }
+
+  .app.analysis-running .swatchPanel .panelHeader::after{
+    opacity:.88;
+    animation:paletteAnalysisSweep 1.18s cubic-bezier(.45,0,.55,1) infinite;
+  }
+
+  @keyframes paletteAnalysisSweep{
+    0%{transform:translateX(-125%)}
+    100%{transform:translateX(390%)}
+  }
+
+  /* 6. Make the currently mapped palette color unmistakable. */
+  .paletteCopySwatch.color-map-active{
+    transform:translateY(-2px) !important;
+  }
+
+  .paletteCopySwatch.color-map-active .miniBox{
+    outline:3px solid color-mix(in srgb, var(--detected-accent, var(--accent)) 84%, white 16%);
+    outline-offset:2px;
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.58),
+      0 5px 14px rgba(28,30,36,.11) !important;
+  }
+
+  .roleCard:has(.roleCopySwatch.color-map-active){
+    outline:2px solid color-mix(in srgb, var(--detected-accent, var(--accent)) 76%, white 24%);
+    outline-offset:-2px;
+    box-shadow:0 6px 16px rgba(28,30,36,.08) !important;
+  }
+
+  .roleCopySwatch.color-map-active{
+    box-shadow:
+      inset 0 0 0 3px rgba(255,255,255,.58),
+      inset 0 0 0 5px color-mix(in srgb, var(--detected-accent, var(--accent)) 68%, transparent) !important;
+  }
+
+  /* 9. Dragging a file over the image stage gives a clear target. */
+  .dragDropOverlay{
+    position:absolute;
+    inset:0;
+    z-index:12;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+    opacity:0;
+    visibility:hidden;
+    background:rgba(250,249,248,.72);
+    backdrop-filter:blur(2px);
+    transition:opacity .15s ease, visibility 0s linear .15s;
+  }
+
+  .dragDropOverlay strong{
+    padding:13px 20px 12px;
+    border:2px solid color-mix(in srgb, var(--detected-accent, var(--accent)) 76%, #34353b 24%);
+    background:rgba(255,255,255,.88);
+    color:color-mix(in srgb, var(--detected-accent, var(--accent)) 82%, #26272c 18%);
+    font-family:var(--font-display, "Times New Roman", serif);
+    font-size:clamp(18px,2.2vw,30px);
+    line-height:1;
+    font-weight:600;
+    letter-spacing:.16em;
+    box-shadow:0 10px 28px rgba(29,30,35,.10);
+    transform:translateY(5px) scale(.985);
+    transition:transform .18s cubic-bezier(.22,1,.36,1);
+  }
+
+  .dropInner.drag{
+    border-color:color-mix(in srgb, var(--detected-accent, var(--accent)) 82%, #4a4b52 18%) !important;
+    box-shadow:inset 0 0 0 2px color-mix(in srgb, var(--detected-accent, var(--accent)) 42%, transparent);
+  }
+
+  .dropInner.drag .dragDropOverlay{
+    opacity:1;
+    visibility:visible;
+    transition:opacity .15s ease;
+  }
+
+  .dropInner.drag .dragDropOverlay strong{
+    transform:translateY(0) scale(1);
+  }
+
+  /* 2. Pixel copy feedback uses the same COPIED #HEX language as swatches. */
+  .pixelColorChip.copy-confirmed{
+    border-color:color-mix(in srgb, var(--detected-accent, var(--accent)) 60%, rgba(35,36,40,.30));
+    box-shadow:0 5px 17px rgba(30,31,36,.17);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .app.analysis-running .swatchPanel .panelHeader::after{
+      animation:none !important;
+      width:100%;
+      transform:none;
+    }
+
+    .dragDropOverlay,
+    .dragDropOverlay strong,
+    .dropInner.has-image #preview,
+    #colorMapOverlay{
+      transition:none !important;
+    }
+  }
+
+
+
+  /* =========================================================
+     v146 — global animation optimization
+     ========================================================= */
+
+  /* Move the live color chip on the compositor instead of relaying out
+     an absolutely-positioned element for every pointer frame. */
+  .pixelColorChip{
+    left:0 !important;
+    top:0 !important;
+    --chip-x:0px;
+    --chip-y:0px;
+    transform:translate3d(var(--chip-x), calc(var(--chip-y) + 2px), 0) !important;
+  }
+
+  .pixelColorChip.visible{
+    transform:translate3d(var(--chip-x), var(--chip-y), 0) !important;
+  }
+
+  .pixelColorChip.copied,
+  .pixelColorChip.copy-confirmed{
+    transform:translate3d(var(--chip-x), calc(var(--chip-y) - 2px), 0) scale(1.035) !important;
+  }
+
+  /* backdrop-filter is costly while a large image is moving underneath it. */
+  .dragDropOverlay{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    background:rgba(250,249,248,.80) !important;
+  }
+
+  /* Layer promotion exists only while an entrance is actually running. */
+  .scrollReveal.motion-active{
+    will-change:opacity, transform !important;
+  }
+
+  .roleCard.scrollReveal.motion-active .roleSwatch{
+    will-change:opacity, filter;
+  }
+
+  .roleCard.scrollReveal.motion-active .roleBody,
+  .miniSwatch.scrollReveal.motion-active .miniBox,
+  .relationshipVisual.scrollReveal.motion-active .hueRingGroup,
+  .relationshipVisual.scrollReveal.motion-active .relationshipMarker,
+  .panelHeader.scrollReveal.motion-active .headerConfidence{
+    will-change:opacity, transform;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .scrollReveal.motion-active,
+    .roleCard.scrollReveal.motion-active .roleSwatch,
+    .roleCard.scrollReveal.motion-active .roleBody,
+    .miniSwatch.scrollReveal.motion-active .miniBox,
+    .relationshipVisual.scrollReveal.motion-active .hueRingGroup,
+    .relationshipVisual.scrollReveal.motion-active .relationshipMarker,
+    .panelHeader.scrollReveal.motion-active .headerConfidence{
+      will-change:auto !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -7147,7 +7568,15 @@
             <span>PNG / JPEG / WEBP に対応 ・ Ctrl+V / ⌘V で画像を貼り付け</span>
             <button id="chooseBtn" type="button">画像を選択</button>
           </div>
+          <div class="dragDropOverlay" id="dragDropOverlay" aria-hidden="true">
+            <strong>DROP IMAGE</strong>
+          </div>
           <img id="preview" alt="preview" />
+          <canvas id="colorMapOverlay" aria-hidden="true"></canvas>
+          <div class="pixelColorChip" id="pixelColorChip" aria-hidden="true">
+            <span class="pixelColorSwatch" id="pixelColorSwatch"></span>
+            <span class="pixelColorHex" id="pixelColorHex">#000000</span>
+          </div>
           <div class="sourceFileName" id="sourceFileName" title=""></div>
           <div class="scrollOverlay" id="scrollOverlay" aria-hidden="true">
             <span class="scrollOverlayLine"></span>
@@ -7373,9 +7802,103 @@ const dropText = document.getElementById('dropText');
 const preview = document.getElementById('preview');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d', { willReadFrequently:true });
+const colorMapOverlay = document.getElementById('colorMapOverlay');
+const colorMapCtx = colorMapOverlay.getContext('2d', { willReadFrequently:true });
+const colorMapFrame = document.querySelector('.imagePanel .drop');
+const pixelColorChip = document.getElementById('pixelColorChip');
+const pixelColorSwatch = document.getElementById('pixelColorSwatch');
+const pixelColorHex = document.getElementById('pixelColorHex');
+
+const pixelSampleCanvas = document.createElement('canvas');
+pixelSampleCanvas.width = 3;
+pixelSampleCanvas.height = 3;
+const pixelSampleCtx = pixelSampleCanvas.getContext('2d', { willReadFrequently:true });
+pixelSampleCtx.imageSmoothingEnabled = false;
+
+let pixelInspectorRaf = 0;
+let pendingPixelPointer = null;
+let currentPixelHex = null;
+let pixelChipWidth = 92;
+let pixelChipHeight = 27;
+let pixelCopyFeedbackTimer = null;
+let colorMapClearTimer = null;
+let dragDepth = 0;
 
 let currentAnalysisData = null;
 let currentSourceFileName = '';
+let activeColorMapState = null;
+let colorMapSourceCache = null;
+
+const COLOR_MAP_LAB_LUT = new Float32Array(32768 * 3);
+const COLOR_MAP_LAB_LUT_READY = new Uint8Array(32768);
+
+function colorMapDistanceSq(r,g,b,targetLab){
+  const qr=r>>3, qg=g>>3, qb=b>>3;
+  const key=(qr<<10)|(qg<<5)|qb;
+  const base=key*3;
+
+  if(!COLOR_MAP_LAB_LUT_READY[key]){
+    const lab=rgbToLab(
+      Math.min(255,(qr<<3)+4),
+      Math.min(255,(qg<<3)+4),
+      Math.min(255,(qb<<3)+4)
+    );
+    COLOR_MAP_LAB_LUT[base]=lab[0];
+    COLOR_MAP_LAB_LUT[base+1]=lab[1];
+    COLOR_MAP_LAB_LUT[base+2]=lab[2];
+    COLOR_MAP_LAB_LUT_READY[key]=1;
+  }
+
+  const dL=COLOR_MAP_LAB_LUT[base]-targetLab[0];
+  const da=COLOR_MAP_LAB_LUT[base+1]-targetLab[1];
+  const db=COLOR_MAP_LAB_LUT[base+2]-targetLab[2];
+  return dL*dL + da*da + db*db;
+}
+function getHighResolutionColorMapSource(){
+  if(!preview?.naturalWidth || !preview?.naturalHeight) return null;
+
+  const bounds=syncColorMapOverlayBounds();
+  if(!bounds) return null;
+
+  const dpr=Math.max(1,window.devicePixelRatio || 1);
+  const desiredMax=Math.max(
+    720,
+    Math.min(1800,Math.ceil(Math.max(bounds.width,bounds.height)*dpr*1.15))
+  );
+
+  const naturalMax=Math.max(preview.naturalWidth,preview.naturalHeight);
+  const scale=Math.min(1,desiredMax/naturalMax);
+  const width=Math.max(1,Math.round(preview.naturalWidth*scale));
+  const height=Math.max(1,Math.round(preview.naturalHeight*scale));
+
+  if(
+    colorMapSourceCache &&
+    colorMapSourceCache.width===width &&
+    colorMapSourceCache.height===height &&
+    colorMapSourceCache.src===preview.src
+  ){
+    return colorMapSourceCache;
+  }
+
+  const sourceCanvas=document.createElement('canvas');
+  sourceCanvas.width=width;
+  sourceCanvas.height=height;
+  const sourceCtx=sourceCanvas.getContext('2d',{willReadFrequently:true});
+  sourceCtx.imageSmoothingEnabled=true;
+  sourceCtx.imageSmoothingQuality='high';
+  sourceCtx.drawImage(preview,0,0,width,height);
+
+  const rgba=sourceCtx.getImageData(0,0,width,height).data;
+  colorMapSourceCache={src:preview.src,width,height,rgba};
+  return colorMapSourceCache;
+}
+let scrollCueDismissed = false;
+
+function dismissScrollCue(){
+  scrollCueDismissed = true;
+  document.getElementById('scrollOverlay')?.classList.remove('visible');
+  dropZone.classList.add('cue-dismissed');
+}
 
 const exportButtons = [
   document.getElementById('copyHexBtn'),
@@ -7426,15 +7949,32 @@ fileInput.onchange = e => {
 };
 resetBtn.onclick = resetUI;
 
-['dragenter','dragover'].forEach(evt => dropZone.addEventListener(evt, e => {
+function setDropDragState(active){
+  dropZone.classList.toggle('drag',!!active);
+}
+
+dropZone.addEventListener('dragenter',e=>{
   e.preventDefault();
-  dropZone.classList.add('drag');
-}));
-['dragleave','drop'].forEach(evt => dropZone.addEventListener(evt, e => {
+  dragDepth++;
+  setDropDragState(true);
+});
+
+dropZone.addEventListener('dragover',e=>{
   e.preventDefault();
-  dropZone.classList.remove('drag');
-}));
+  if(e.dataTransfer) e.dataTransfer.dropEffect='copy';
+  setDropDragState(true);
+});
+
+dropZone.addEventListener('dragleave',e=>{
+  e.preventDefault();
+  dragDepth=Math.max(0,dragDepth-1);
+  if(dragDepth===0) setDropDragState(false);
+});
+
 dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dragDepth=0;
+  setDropDragState(false);
   const file = e.dataTransfer.files?.[0];
   if(file && file.type.startsWith('image/')) loadImage(file);
 });
@@ -7463,11 +8003,377 @@ document.addEventListener('paste', e => {
   loadImage(imageFile);
 });
 
+function clearColorMap(){
+  activeColorMapState = null;
+  colorMapFrame?.classList.remove('color-map-mode');
+  dropZone.classList.remove('has-color-map');
+  colorMapOverlay.classList.remove('visible');
+  document.querySelectorAll('.paletteCopySwatch.color-map-active,.roleCopySwatch.color-map-active')
+    .forEach(el=>el.classList.remove('color-map-active'));
+
+  if(colorMapClearTimer) clearTimeout(colorMapClearTimer);
+  colorMapClearTimer=setTimeout(()=>{
+    colorMapClearTimer=null;
+    if(activeColorMapState) return;
+    colorMapOverlay.style.width='0px';
+    colorMapOverlay.style.height='0px';
+    colorMapOverlay.width=1;
+    colorMapOverlay.height=1;
+    colorMapCtx.setTransform(1,0,0,1,0,0);
+    colorMapCtx.clearRect(0,0,1,1);
+  },190);
+}
+
+function invalidatePreviewGeometry(){
+  // Kept as a no-op compatibility hook for the optimized pointer code.
+}
+
+function syncColorMapOverlayBounds(){
+  if(!preview?.src || !dropZone.classList.contains('has-image')) return null;
+
+  const boxWidth=preview.clientWidth || preview.offsetWidth || 0;
+  const boxHeight=preview.clientHeight || preview.offsetHeight || 0;
+  const naturalWidth=preview.naturalWidth || 0;
+  const naturalHeight=preview.naturalHeight || 0;
+  if(!boxWidth || !boxHeight || !naturalWidth || !naturalHeight) return null;
+
+  const scale=Math.min(boxWidth/naturalWidth,boxHeight/naturalHeight);
+  const width=Math.max(1,naturalWidth*scale);
+  const height=Math.max(1,naturalHeight*scale);
+  const left=(preview.offsetLeft || 0)+(boxWidth-width)/2;
+  const top=(preview.offsetTop || 0)+(boxHeight-height)/2;
+
+  colorMapOverlay.style.left=`${left}px`;
+  colorMapOverlay.style.top=`${top}px`;
+  colorMapOverlay.style.width=`${width}px`;
+  colorMapOverlay.style.height=`${height}px`;
+
+  return {width,height,left,top};
+}
+
+
+const pixelChipResizeObserver=typeof ResizeObserver!=='undefined'
+  ? new ResizeObserver(entries=>{
+      const rect=entries[0]?.contentRect;
+      if(rect?.width) pixelChipWidth=Math.ceil(rect.width);
+      if(rect?.height) pixelChipHeight=Math.ceil(rect.height);
+    })
+  : null;
+pixelChipResizeObserver?.observe(pixelColorChip);
+
+
+function hidePixelColorChip(){
+  pendingPixelPointer=null;
+  currentPixelHex=null;
+  if(pixelCopyFeedbackTimer){
+    clearTimeout(pixelCopyFeedbackTimer);
+    pixelCopyFeedbackTimer=null;
+  }
+  pixelColorChip?.classList.remove('visible','copied','copy-confirmed');
+}
+
+function rgbToHexFast(r,g,b){
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`.toUpperCase();
+}
+
+function median9(values){
+  values.sort((a,b)=>a-b);
+  return values[4];
+}
+
+function sampleMedianPixelHex(sx,sy){
+  const x0=Math.max(0,Math.min(preview.naturalWidth-3,sx-1));
+  const y0=Math.max(0,Math.min(preview.naturalHeight-3,sy-1));
+  const sourceWidth=Math.min(3,preview.naturalWidth);
+  const sourceHeight=Math.min(3,preview.naturalHeight);
+
+  pixelSampleCtx.clearRect(0,0,3,3);
+  pixelSampleCtx.drawImage(preview,x0,y0,sourceWidth,sourceHeight,0,0,3,3);
+  const rgba=pixelSampleCtx.getImageData(0,0,3,3).data;
+  const rs=[],gs=[],bs=[];
+  for(let i=0;i<rgba.length;i+=4){
+    if(rgba[i+3]<16) continue;
+    rs.push(rgba[i]);
+    gs.push(rgba[i+1]);
+    bs.push(rgba[i+2]);
+  }
+  if(!rs.length) return null;
+
+  // Tiny images can produce fewer than nine valid pixels. The middle item is
+  // still a stable local representative.
+  if(rs.length!==9){
+    rs.sort((a,b)=>a-b); gs.sort((a,b)=>a-b); bs.sort((a,b)=>a-b);
+    const mid=Math.floor(rs.length/2);
+    return rgbToHexFast(rs[mid],gs[mid],bs[mid]);
+  }
+  return rgbToHexFast(median9(rs),median9(gs),median9(bs));
+}
+
+function updatePixelColorChip(pointer){
+  if(!pointer || !dropZone.classList.contains('has-image') || !preview.naturalWidth || !preview.naturalHeight){
+    hidePixelColorChip();
+    return;
+  }
+
+  const bounds=syncColorMapOverlayBounds();
+  if(!bounds){
+    hidePixelColorChip();
+    return;
+  }
+
+  const hostRect=dropZone.getBoundingClientRect();
+  const localX=pointer.clientX-hostRect.left;
+  const localY=pointer.clientY-hostRect.top;
+
+  const inside=
+    localX>=bounds.left &&
+    localX<=(bounds.left+bounds.width) &&
+    localY>=bounds.top &&
+    localY<=(bounds.top+bounds.height);
+
+  if(!inside){
+    hidePixelColorChip();
+    return;
+  }
+
+  const u=Math.min(.999999,Math.max(0,(localX-bounds.left)/bounds.width));
+  const v=Math.min(.999999,Math.max(0,(localY-bounds.top)/bounds.height));
+  const sx=Math.min(preview.naturalWidth-1,Math.max(0,Math.floor(u*preview.naturalWidth)));
+  const sy=Math.min(preview.naturalHeight-1,Math.max(0,Math.floor(v*preview.naturalHeight)));
+
+  const hex=sampleMedianPixelHex(sx,sy);
+  if(!hex){
+    hidePixelColorChip();
+    return;
+  }
+  currentPixelHex=hex;
+
+  pixelColorSwatch.style.background=hex;
+  if(!pixelColorChip.classList.contains('copy-confirmed')){
+    pixelColorHex.textContent=hex;
+  }
+
+  // Prefer the upper-right of the pointer, but keep the chip inside the preview frame.
+  const chipWidth=pixelChipWidth;
+  const chipHeight=pixelChipHeight;
+  const gapX=14;
+  const gapY=12;
+  const pad=7;
+  const hostWidth=hostRect.width;
+  const hostHeight=hostRect.height;
+
+  let x=localX+gapX;
+  let y=localY-chipHeight-gapY;
+
+  if(x+chipWidth>hostWidth-pad){
+    x=localX-chipWidth-gapX;
+  }
+  if(y<pad){
+    y=localY+gapY;
+  }
+
+  x=Math.max(pad,Math.min(x,hostWidth-chipWidth-pad));
+  y=Math.max(pad,Math.min(y,hostHeight-chipHeight-pad));
+
+  pixelColorChip.style.setProperty('--chip-x',`${Math.round(x)}px`);
+  pixelColorChip.style.setProperty('--chip-y',`${Math.round(y)}px`);
+  pixelColorChip.classList.add('visible');
+}
+
+function queuePixelInspector(pointer){
+  pendingPixelPointer={
+    clientX:pointer.clientX,
+    clientY:pointer.clientY
+  };
+
+  if(pixelInspectorRaf) return;
+  pixelInspectorRaf=requestAnimationFrame(()=>{
+    pixelInspectorRaf=0;
+    const next=pendingPixelPointer;
+    pendingPixelPointer=null;
+    updatePixelColorChip(next);
+  });
+}
+
+dropZone.addEventListener('pointermove',event=>{
+  if(event.pointerType && event.pointerType!=='mouse') return;
+  queuePixelInspector(event);
+});
+
+dropZone.addEventListener('pointerleave',hidePixelColorChip);
+
+dropZone.addEventListener('click',async event=>{
+  // Refresh the sample at the exact click position before copying.
+  updatePixelColorChip(event);
+  if(!currentPixelHex || !pixelColorChip?.classList.contains('visible')) return;
+
+  // Keep a Color Map open while using the pixel inspector.
+  event.stopPropagation();
+
+  const copiedHex=currentPixelHex;
+  const copied=await copyPaletteHex(copiedHex);
+  if(copied){
+    if(pixelCopyFeedbackTimer) clearTimeout(pixelCopyFeedbackTimer);
+    pixelColorChip.classList.remove('copied','copy-confirmed');
+    requestAnimationFrame(()=>{
+      if(pixelColorChip?.classList.contains('visible')){
+        pixelColorChip.classList.add('copied','copy-confirmed');
+      }
+    });
+    pixelColorHex.textContent=`COPIED ${copiedHex}`;
+    pixelCopyFeedbackTimer=setTimeout(()=>{
+      pixelCopyFeedbackTimer=null;
+      pixelColorChip?.classList.remove('copied','copy-confirmed');
+      if(pixelColorHex && currentPixelHex) pixelColorHex.textContent=currentPixelHex;
+    },720);
+  }
+});
+
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Escape' || !activeColorMapState) return;
+  event.preventDefault();
+  clearColorMap();
+  hidePixelColorChip();
+});
+
+function buildColorMapMaskCanvas(hex){
+  const pixelStore=getHighResolutionColorMapSource();
+  if(!pixelStore?.rgba || !pixelStore.width || !pixelStore.height) return null;
+
+  const targetRgb=hexToRgb(hex);
+  if(!targetRgb) return null;
+
+  const targetLab=rgbToLab(targetRgb.r,targetRgb.g,targetRgb.b);
+  const targetHsv=rgbToHsv(targetRgb.r,targetRgb.g,targetRgb.b);
+  const isNeutral=targetHsv.s < 0.14;
+
+  // Show the selected colour clearly, but keep neighbouring colours visible too.
+  const coreLimit=isNeutral ? 5.8 : 7.6;
+  const nearLimit=isNeutral ? 10.4 : 13.8;
+  const fadeLimit=isNeutral ? 14.4 : 18.8;
+  const fadeLimitSq=fadeLimit*fadeLimit;
+
+  const mask=document.createElement('canvas');
+  mask.width=pixelStore.width;
+  mask.height=pixelStore.height;
+  const maskCtx=mask.getContext('2d', { willReadFrequently:true });
+  const out=maskCtx.createImageData(mask.width,mask.height);
+  const src=pixelStore.rgba;
+  const data=out.data;
+  const tr=targetRgb.r,tg=targetRgb.g,tb=targetRgb.b;
+
+  for(let i=0;i<src.length;i+=4){
+    const srcAlpha=src[i+3];
+    if(srcAlpha<10){
+      data[i+3]=0;
+      continue;
+    }
+
+    const sr=src[i], sg=src[i+1], sb=src[i+2];
+    const distSq=colorMapDistanceSq(sr,sg,sb,targetLab);
+    if(distSq>=fadeLimitSq){
+      data[i+3]=0;
+      continue;
+    }
+
+    // sqrt is only needed for pixels that survive the outer threshold.
+    const dist=Math.sqrt(distSq);
+    let alpha=1;
+    let blend=1;
+
+    if(dist<=coreLimit){
+      alpha=1;
+      blend=1;
+    }else if(dist<=nearLimit){
+      const t=(nearLimit-dist)/(nearLimit-coreLimit);
+      const eased=t*t*(3-2*t);
+      alpha=0.74 + eased*0.26;
+      blend=0.64 + eased*0.36;
+    }else{
+      const t=(fadeLimit-dist)/(fadeLimit-nearLimit);
+      const eased=t*t*(3-2*t);
+      alpha=(isNeutral ? 0.14 : 0.18) + eased*(isNeutral ? 0.42 : 0.50);
+      blend=(isNeutral ? 0.26 : 0.34) + eased*(isNeutral ? 0.22 : 0.26);
+    }
+
+    // Keep nearby colours visible by blending the source pixel with the selected hue.
+    data[i]=Math.round(sr*(1-blend) + tr*blend);
+    data[i+1]=Math.round(sg*(1-blend) + tg*blend);
+    data[i+2]=Math.round(sb*(1-blend) + tb*blend);
+    data[i+3]=Math.round(alpha*srcAlpha);
+  }
+
+  maskCtx.putImageData(out,0,0);
+  return mask;
+}
+function renderActiveColorMap(){
+  if(!activeColorMapState?.maskCanvas) return;
+  const bounds=syncColorMapOverlayBounds();
+  if(!bounds) return;
+
+  if(colorMapClearTimer){
+    clearTimeout(colorMapClearTimer);
+    colorMapClearTimer=null;
+  }
+
+  const dpr=Math.max(1, window.devicePixelRatio || 1);
+  colorMapOverlay.width=Math.max(1,Math.round(bounds.width*dpr));
+  colorMapOverlay.height=Math.max(1,Math.round(bounds.height*dpr));
+
+  colorMapCtx.setTransform(1,0,0,1,0,0);
+  colorMapCtx.clearRect(0,0,colorMapOverlay.width,colorMapOverlay.height);
+  colorMapCtx.scale(dpr,dpr);
+  colorMapCtx.imageSmoothingEnabled=true;
+  colorMapCtx.imageSmoothingQuality='high';
+  colorMapCtx.globalAlpha=1;
+  colorMapCtx.globalCompositeOperation='source-over';
+  if('filter' in colorMapCtx) colorMapCtx.filter='blur(0.25px)';
+  colorMapCtx.drawImage(activeColorMapState.maskCanvas,0,0,bounds.width,bounds.height);
+  if('filter' in colorMapCtx) colorMapCtx.filter='none';
+
+  // Commit Color Map mode and the finished mask together.
+  // This avoids a resize/fade timing race that could leave the overlay hidden.
+  dropZone.classList.add('has-color-map');
+  colorMapFrame?.classList.add('color-map-mode');
+  colorMapOverlay.classList.add('visible');
+}
+function showColorMapForHex(hex, sourceEl){
+  if(!currentAnalysisData) return;
+  dismissScrollCue();
+  const normalizedHex=String(hex||'').toUpperCase();
+  const maskCanvas=buildColorMapMaskCanvas(normalizedHex);
+  if(!maskCanvas){
+    clearColorMap();
+    return;
+  }
+  activeColorMapState={hex:normalizedHex,maskCanvas};
+  document.querySelectorAll('.paletteCopySwatch[data-copy-hex],.roleCopySwatch[data-copy-hex]')
+    .forEach(el=>{
+      el.classList.toggle('color-map-active',String(el.dataset.copyHex||'').toUpperCase()===normalizedHex);
+    });
+  renderActiveColorMap();
+}
+
+window.addEventListener('resize',()=>{
+  if(activeColorMapState?.maskCanvas){
+    requestAnimationFrame(renderActiveColorMap);
+  }
+},{passive:true});
+
 function resetUI(){
+  hidePixelColorChip();
+  invalidatePreviewGeometry();
+  setAnalysisRunning(false);
+  dragDepth=0;
+  setDropDragState(false);
   analysisRunToken++;
   clearBarAnimations();
   clearTextAnimations();
   clearDynamicTheme();
+  clearColorMap();
+  colorMapSourceCache = null;
+  scrollCueDismissed = false;
+  dropZone.classList.remove('cue-dismissed');
   document.querySelector('.app')?.classList.add('noImageState');
   preview.src = '';
   preview.style.display = 'none';
@@ -7504,6 +8410,14 @@ function resetUI(){
 }
 
 function loadImage(file){
+  hidePixelColorChip();
+  invalidatePreviewGeometry();
+  setAnalysisRunning(false);
+  dragDepth=0;
+  setDropDragState(false);
+  colorMapSourceCache = null;
+  scrollCueDismissed = false;
+  dropZone.classList.remove('cue-dismissed');
   currentSourceFileName=file?.name || 'Untitled image';
   const sourceNameEl=document.getElementById('sourceFileName');
   if(sourceNameEl){
@@ -7516,6 +8430,7 @@ function loadImage(file){
   reader.onload = () => {
     preview.src = reader.result;
     preview.onload = () => {
+      clearColorMap();
       document.querySelector('.app')?.classList.remove('noImageState');
       preview.style.display='block';
       dropText.style.display='none';
@@ -7526,7 +8441,9 @@ function loadImage(file){
       scrollOverlay?.classList.remove('visible');
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          scrollOverlay?.classList.add('visible');
+          if(!scrollCueDismissed && !activeColorMapState){
+            scrollOverlay?.classList.add('visible');
+          }
         });
       });
 
@@ -7545,55 +8462,92 @@ let analysisRunToken = 0;
 /* ---------- shared motion engine ---------- */
 const reducedMotionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let motionRafId = null;
+let motionWakeTimerId = null;
 const motionJobs = new Set();
 
 function prefersReducedMotion(){
   return !!reducedMotionQuery?.matches;
 }
 
+function clearMotionWakeHandle(){
+  if(motionRafId !== null){
+    cancelAnimationFrame(motionRafId);
+    motionRafId=null;
+  }
+  if(motionWakeTimerId !== null){
+    clearTimeout(motionWakeTimerId);
+    motionWakeTimerId=null;
+  }
+}
+
+function nextMotionWait(now){
+  let wait=Infinity;
+  for(const job of motionJobs){
+    if(now<job.start){
+      wait=Math.min(wait,job.start-now);
+      continue;
+    }
+    if(job.duration<=0) return 0;
+    if((now-job.start)>=job.duration) return 0;
+    if(!job.frameInterval || !job.lastUpdate) return 0;
+    wait=Math.min(wait,Math.max(0,job.frameInterval-(now-job.lastUpdate)));
+  }
+  return wait;
+}
+
 function ensureMotionLoop(){
-  if(motionRafId !== null || motionJobs.size === 0) return;
-  motionRafId = requestAnimationFrame(runMotionFrame);
+  if(motionRafId!==null || motionWakeTimerId!==null || motionJobs.size===0) return;
+
+  const wait=nextMotionWait(performance.now());
+  if(!Number.isFinite(wait)) return;
+
+  if(wait>20){
+    motionWakeTimerId=setTimeout(()=>{
+      motionWakeTimerId=null;
+      if(motionJobs.size) motionRafId=requestAnimationFrame(runMotionFrame);
+    },Math.max(0,wait-8));
+  }else{
+    motionRafId=requestAnimationFrame(runMotionFrame);
+  }
 }
 
 function runMotionFrame(now){
-  motionRafId = null;
+  motionRafId=null;
 
-  for(const job of [...motionJobs]){
-    if(now < job.start) continue;
+  // Deleting the current Set entry during iteration is safe and avoids a
+  // per-frame [...motionJobs] array allocation.
+  for(const job of motionJobs){
+    if(now<job.start) continue;
 
-    const duration = Math.max(0, job.duration);
-    const progress = duration === 0 ? 1 : Math.min(1, (now - job.start) / duration);
-    const shouldUpdate =
-      progress >= 1 ||
+    const progress=job.duration===0 ? 1 : Math.min(1,(now-job.start)/job.duration);
+    const shouldUpdate=
+      progress>=1 ||
       !job.frameInterval ||
       !job.lastUpdate ||
-      now - job.lastUpdate >= job.frameInterval;
+      now-job.lastUpdate>=job.frameInterval-1;
 
     if(shouldUpdate){
-      job.lastUpdate = now;
+      job.lastUpdate=now;
       try{
-        job.update?.(progress, now);
+        job.update?.(progress,now);
       }catch(error){
-        console.error('Animation update failed:', error);
+        console.error('Animation update failed:',error);
         motionJobs.delete(job);
         continue;
       }
     }
 
-    if(progress >= 1){
+    if(progress>=1){
       motionJobs.delete(job);
       try{
         job.complete?.();
       }catch(error){
-        console.error('Animation completion failed:', error);
+        console.error('Animation completion failed:',error);
       }
     }
   }
 
-  if(motionJobs.size){
-    motionRafId = requestAnimationFrame(runMotionFrame);
-  }
+  ensureMotionLoop();
 }
 
 function queueMotion({
@@ -7604,28 +8558,34 @@ function queueMotion({
   complete=null
 }={}){
   if(prefersReducedMotion()){
-    update?.(1, performance.now());
+    update?.(1,performance.now());
     complete?.();
     return null;
   }
 
-  const now = performance.now();
-  const job = {
-    start: now + Math.max(0, delay),
-    duration: Math.max(0, duration),
-    frameInterval: fps > 0 ? 1000 / fps : 0,
-    lastUpdate: 0,
+  const now=performance.now();
+  const job={
+    start:now+Math.max(0,delay),
+    duration:Math.max(0,duration),
+    frameInterval:fps>0 ? 1000/fps : 0,
+    lastUpdate:0,
     update,
     complete
   };
 
   motionJobs.add(job);
+
+  // Re-evaluate an existing sleep because this new job may be due earlier.
+  if(motionWakeTimerId!==null){
+    clearTimeout(motionWakeTimerId);
+    motionWakeTimerId=null;
+  }
   ensureMotionLoop();
   return job;
 }
 
-function queueMotionTask(callback, delay=0){
-  if(typeof callback !== 'function') return null;
+function queueMotionTask(callback,delay=0){
+  if(typeof callback!=='function') return null;
   return queueMotion({
     delay,
     duration:0,
@@ -7635,21 +8595,17 @@ function queueMotionTask(callback, delay=0){
 
 function cancelMotionJobs(){
   motionJobs.clear();
-  if(motionRafId !== null){
-    cancelAnimationFrame(motionRafId);
-    motionRafId = null;
-  }
+  clearMotionWakeHandle();
 }
 
 function resetProgressBars(){
-  const bars=[...document.querySelectorAll('.fill')];
+  const bars=document.querySelectorAll('.fill');
   for(const bar of bars){
     bar.style.transition='none';
     bar.style.setProperty('--fill-scale','0');
     bar.style.width='100%';
   }
 
-  // Restore transitions on one shared frame, without forcing a synchronous layout.
   requestAnimationFrame(()=>{
     for(const bar of bars){
       if(bar.isConnected) bar.style.transition='';
@@ -7658,8 +8614,13 @@ function resetProgressBars(){
 }
 
 /* ---------- analysis lifecycle ---------- */
+function setAnalysisRunning(active){
+  document.querySelector('.app')?.classList.toggle('analysis-running',!!active);
+}
+
 function setPreAnalysisState(){
   analysisRunToken++;
+  setAnalysisRunning(true);
   clearTextAnimations();
   clearDynamicTheme();
   resetProgressBars();
@@ -7888,6 +8849,7 @@ function clearResultRevealSystem(){
     resultRevealObserver=null;
   }
   resultRevealEntries.clear();
+  document.querySelectorAll('.scrollReveal.motion-active').forEach(el=>el.classList.remove('motion-active'));
 }
 
 function ensureResultRevealObserver(){
@@ -7902,14 +8864,19 @@ function ensureResultRevealObserver(){
 
       meta.done=true;
       resultRevealObserver.unobserve(entry.target);
-      entry.target.classList.add('is-revealed');
+
+      const target=entry.target;
+      target.classList.add('motion-active','is-revealed');
 
       if(typeof meta.callback === 'function'){
-        // Start internal counters/bars shortly after the element begins revealing.
         queueMotionTask(meta.callback,meta.delay+70);
       }
 
-      resultRevealEntries.delete(entry.target);
+      queueMotionTask(()=>{
+        if(target.isConnected) target.classList.remove('motion-active');
+      },meta.delay+1750);
+
+      resultRevealEntries.delete(target);
     }
 
     if(resultRevealEntries.size===0 && resultRevealObserver){
@@ -8051,7 +9018,10 @@ function setupScrollDrivenResultAnimations(data){
 
   // Tone Metrics / Overall Balance.
   const metricPanel=document.querySelector('.metricsPanel');
-  addResultReveal(metricPanel,{className:'revealSoft'});
+  addResultReveal(metricPanel,{
+    className:'revealSoft',
+    callback:dismissScrollCue
+  });
   addResultReveal(metricPanel?.querySelector('.panelHeader'),{
     delay:55,
     className:'revealSmall'
@@ -8302,71 +9272,82 @@ function buildPixelFeatureSet(rgba,w,h){
   let temperatureWeightedSum=0;
   let temperatureWeight=0;
   let seed=2166136261>>>0;
-  const coarseBins=new Set();
+  const coarseBinSeen=new Uint8Array(1440);
+  let coarseBinCount=0;
   const hsv=[0,0,0];
   const o=[0,0,0];
-  const rgbaLength=rgba.length;
   const rowStride=w*4;
+  const edgeNorm=1/(3*255*255);
+  const hasX=w>1;
+  const hasY=h>1;
 
-  const rgbEdge=(i,j)=>{
-    if(j<0 || j>=rgbaLength || rgba[j+3]<180) return 0;
-    const dr=rgba[i]-rgba[j];
-    const dg=rgba[i+1]-rgba[j+1];
-    const db=rgba[i+2]-rgba[j+2];
-    return Math.sqrt((dr*dr+dg*dg+db*db)/(3*255*255));
-  };
+  for(let y=0;y<h;y++){
+    const yNorm=hasY?y/(h-1):.5;
+    const rowPixelBase=y*w;
+    for(let x=0;x<w;x++){
+      const p=rowPixelBase+x;
+      const i=p*4;
+      if(rgba[i+3]<180) continue;
 
-  for(let p=0;p<pixelCount;p++){
-    const i=p*4;
-    if(rgba[i+3]<180) continue;
+      const r=rgba[i],g=rgba[i+1],b=rgba[i+2];
+      rgb8ToHsvInto(r,g,b,hsv);
+      rgb8ToOklabInto(r,g,b,o);
+      const c=Math.sqrt(o[1]*o[1]+o[2]*o[2]);
+      const oBase=n*3;
 
-    const r=rgba[i],g=rgba[i+1],b=rgba[i+2];
-    rgb8ToHsvInto(r,g,b,hsv);
-    rgb8ToOklabInto(r,g,b,o);
-    const c=Math.sqrt(o[1]*o[1]+o[2]*o[2]);
-    const oBase=n*3;
+      okLab[oBase]=o[0];
+      okLab[oBase+1]=o[1];
+      okLab[oBase+2]=o[2];
+      hsvS[n]=hsv[1];
+      hsvV[n]=hsv[2];
+      lum[n]=(LUMA_R_8BIT[r]+LUMA_G_8BIT[g]+LUMA_B_8BIT[b])/255;
+      okChroma[n]=c;
+      nx[n]=hasX?x/(w-1):.5;
+      ny[n]=yNorm;
 
-    okLab[oBase]=o[0];
-    okLab[oBase+1]=o[1];
-    okLab[oBase+2]=o[2];
-    hsvS[n]=hsv[1];
-    hsvV[n]=hsv[2];
-    lum[n]=(LUMA_R_8BIT[r]+LUMA_G_8BIT[g]+LUMA_B_8BIT[b])/255;
-    okChroma[n]=c;
+      // Local edge strength is used only to stabilise palette extraction.
+      // Edge pixels still count normally in final area percentages.
+      let edge=0;
+      if(x<w-1){
+        const j=i+4;
+        if(rgba[j+3]>=180){
+          const dr=r-rgba[j], dg=g-rgba[j+1], db=b-rgba[j+2];
+          edge=Math.sqrt((dr*dr+dg*dg+db*db)*edgeNorm);
+        }
+      }
+      if(y<h-1){
+        const j=i+rowStride;
+        if(rgba[j+3]>=180){
+          const dr=r-rgba[j], dg=g-rgba[j+1], db=b-rgba[j+2];
+          const downEdge=Math.sqrt((dr*dr+dg*dg+db*db)*edgeNorm);
+          if(downEdge>edge) edge=downEdge;
+        }
+      }
+      edgeStrength[n]=edge;
 
-    const x=p%w;
-    const y=Math.floor(p/w);
-    nx[n]=w>1?x/(w-1):.5;
-    ny[n]=h>1?y/(h-1):.5;
+      // Anti-aliased / boundary pixels get less influence when learning centers,
+      // but are never discarded.
+      const edgePenalty=clamp01(edge/.32);
+      clusterWeight[n]=.56+.44*(1-edgePenalty);
 
-    // Local edge strength is used only to stabilise palette extraction.
-    // Edge pixels still count normally in final area percentages.
-    const right=x<w-1 ? i+4 : -1;
-    const down=y<h-1 ? i+rowStride : -1;
-    const edge=Math.max(
-      right>=0?rgbEdge(i,right):0,
-      down>=0?rgbEdge(i,down):0
-    );
-    edgeStrength[n]=edge;
+      const tempWeight=Math.pow(hsv[1],.78)*(.35+.65*o[0]);
+      temperatureWeightedSum+=hueTemperatureScore(hsv[0])*tempWeight;
+      temperatureWeight+=tempWeight;
 
-    // Anti-aliased / boundary pixels get less influence when learning centers,
-    // but are never discarded.
-    const edgePenalty=clamp01(edge/.32);
-    clusterWeight[n]=.56+.44*(1-edgePenalty);
+      const qL=Math.max(0,Math.min(9,Math.floor(o[0]*10)));
+      const qa=Math.max(0,Math.min(11,Math.floor((o[1]+.36)/.72*12)));
+      const qb=Math.max(0,Math.min(11,Math.floor((o[2]+.36)/.72*12)));
+      const coarseKey=qL*144+qa*12+qb;
+      if(!coarseBinSeen[coarseKey]){
+        coarseBinSeen[coarseKey]=1;
+        coarseBinCount++;
+      }
 
-    const tempWeight=Math.pow(hsv[1],.78)*(.35+.65*o[0]);
-    temperatureWeightedSum+=hueTemperatureScore(hsv[0])*tempWeight;
-    temperatureWeight+=tempWeight;
-
-    const qL=Math.max(0,Math.min(9,Math.floor(o[0]*10)));
-    const qa=Math.max(0,Math.min(11,Math.floor((o[1]+.36)/.72*12)));
-    const qb=Math.max(0,Math.min(11,Math.floor((o[2]+.36)/.72*12)));
-    coarseBins.add(qL*144+qa*12+qb);
-
-    seed^=r; seed=Math.imul(seed,16777619);
-    seed^=g; seed=Math.imul(seed,16777619);
-    seed^=b; seed=Math.imul(seed,16777619);
-    n++;
+      seed^=r; seed=Math.imul(seed,16777619);
+      seed^=g; seed=Math.imul(seed,16777619);
+      seed^=b; seed=Math.imul(seed,16777619);
+      n++;
+    }
   }
 
   return {
@@ -8380,13 +9361,12 @@ function buildPixelFeatureSet(rgba,w,h){
     ny:ny.subarray(0,n),
     edgeStrength:edgeStrength.subarray(0,n),
     clusterWeight:clusterWeight.subarray(0,n),
-    coarseBinCount:coarseBins.size,
+    coarseBinCount,
     temperatureWeightedSum,
     temperatureWeight,
     seed:seed>>>0
   };
 }
-
 function sortedFloatCopy(values){
   const copy=values.slice();
   copy.sort();
@@ -10536,7 +11516,7 @@ function animateSingleImpressionRow(row){
 }
 
 function analyze(img,token=analysisRunToken){
-  const maxSide=320;
+  const maxSide=384;
   let w=img.naturalWidth,h=img.naturalHeight;
   const scale=Math.min(1,maxSide/Math.max(w,h));
 
@@ -10551,7 +11531,10 @@ function analyze(img,token=analysisRunToken){
   const rgba=ctx.getImageData(0,0,w,h).data;
   const features=buildPixelFeatureSet(rgba,w,h);
 
-  if(!features.n||token!==analysisRunToken) return;
+  if(!features.n||token!==analysisRunToken){
+    setAnalysisRunning(false);
+    return;
+  }
 
   clearBarAnimations();
 
@@ -10641,6 +11624,11 @@ function analyze(img,token=analysisRunToken){
     confidence,
     balance,
     palette,
+    mapPixels:{
+      width:w,
+      height:h,
+      rgba:new Uint8ClampedArray(rgba)
+    },
     analysisMeta:{
       analyzedPixels:features.n,
       coarseColorBins:features.coarseBinCount,
@@ -10653,6 +11641,7 @@ function analyze(img,token=analysisRunToken){
     }
   };
 
+  setAnalysisRunning(false);
   renderExportSummary(palette,roleMap,relationship,confidence);
   renderSimilarImageSearch(currentAnalysisData);
 
@@ -11528,11 +12517,22 @@ document.addEventListener('click',async event=>{
   const swatch=event.target.closest?.(
     '.paletteCopySwatch[data-copy-hex], .roleCopySwatch[data-copy-hex]'
   );
-  if(!swatch) return;
 
-  const hex=swatch.dataset.copyHex;
+  if(!swatch){
+    if(activeColorMapState) clearColorMap();
+    return;
+  }
+
+  const hex=String(swatch.dataset.copyHex||'').toUpperCase();
+  const togglingOff=!!activeColorMapState && activeColorMapState.hex===hex;
   const success=await copyPaletteHex(hex);
   showPaletteCopyFeedback(swatch,hex,success);
+
+  if(togglingOff){
+    clearColorMap();
+  }else{
+    showColorMapForHex(hex, swatch);
+  }
 });
 
 function setMetric(key, value, isWarm=false, delay=0){
@@ -11883,11 +12883,21 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
   const coords=features.okLab;
   const weights=features.clusterWeight;
   const featureCount=features.n;
+  const k=working.length;
+  const centers=new Float64Array(k*3);
+  const sums=new Float64Array(k*4);
 
   for(let it=0;it<iterations;it++){
-    const k=working.length;
-    const centers=working.map(c=>c.oklab||rgbToOklab(...c.center));
-    const sums=new Float64Array(k*4);
+    sums.fill(0);
+
+    for(let j=0;j<k;j++){
+      const color=working[j];
+      const c=color.oklab||rgbToOklab(...color.center);
+      const base=j*3;
+      centers[base]=c[0];
+      centers[base+1]=c[1];
+      centers[base+2]=c[2];
+    }
 
     for(let p=0;p<featureCount;p++){
       const base3=p*3;
@@ -11897,8 +12907,10 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
 
       let best=0,bestD=Infinity;
       for(let j=0;j<k;j++){
-        const c=centers[j];
-        const dL=L-c[0],da=a-c[1],db=b-c[2];
+        const cBase=j*3;
+        const dL=L-centers[cBase];
+        const da=a-centers[cBase+1];
+        const db=b-centers[cBase+2];
         const d=dL*dL+da*da+db*db;
         if(d<bestD){
           bestD=d;
@@ -11906,7 +12918,7 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
         }
       }
 
-      const wt=weights?.[p]??1;
+      const wt=weights[p];
       const base=best*4;
       sums[base]+=L*wt;
       sums[base+1]+=a*wt;
@@ -11914,12 +12926,17 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
       sums[base+3]+=wt;
     }
 
-    working=working.map((color,j)=>{
+    const nextWorking=new Array(k);
+    for(let j=0;j<k;j++){
+      const color=working[j];
       const base=j*4;
       const mass=sums[base+3];
-      if(mass<=1e-9) return color;
+      if(mass<=1e-9){
+        nextWorking[j]=color;
+        continue;
+      }
 
-      return enrichColor({
+      nextWorking[j]=enrichColor({
         ...color,
         center:oklabToRgb(
           sums[base]/mass,
@@ -11927,12 +12944,12 @@ function refinePaletteWithFullPixels(palette,features,iterations=2){
           sums[base+2]/mass
         )
       });
-    });
+    }
+    working=nextWorking;
   }
 
   return working;
 }
-
 function mergeEdgeArtifacts(palette,spatialStats){
   if(palette.length<=1) return {palette,mergedCount:0};
 
@@ -12081,21 +13098,27 @@ function analyzePaletteSpatialStats(palette,features){
   const yValues=features.ny;
   const edgeValues=features.edgeStrength;
   const featureCount=features.n;
+  const k=palette.length;
   const gridX=6,gridY=4,gridN=gridX*gridY;
-  const stats=palette.map(c=>({
-    color:c,
-    count:0,
-    xSum:0,
-    ySum:0,
-    centerCount:0,
-    edgeCount:0,
-    localEdgeSum:0,
-    highLocalEdgeCount:0,
-    interiorCount:0,
-    cells:new Uint32Array(gridN)
-  }));
 
-  const centers=palette.map(c=>c.oklab||rgbToOklab(...c.center));
+  const centers=new Float64Array(k*3);
+  const counts=new Uint32Array(k);
+  const xSums=new Float64Array(k);
+  const ySums=new Float64Array(k);
+  const centerCounts=new Uint32Array(k);
+  const edgeCounts=new Uint32Array(k);
+  const localEdgeSums=new Float64Array(k);
+  const highLocalEdgeCounts=new Uint32Array(k);
+  const interiorCounts=new Uint32Array(k);
+  const cells=new Uint32Array(k*gridN);
+
+  for(let j=0;j<k;j++){
+    const c=palette[j].oklab||rgbToOklab(...palette[j].center);
+    const base=j*3;
+    centers[base]=c[0];
+    centers[base+1]=c[1];
+    centers[base+2]=c[2];
+  }
 
   for(let p=0;p<featureCount;p++){
     const base3=p*3;
@@ -12104,11 +13127,12 @@ function analyzePaletteSpatialStats(palette,features){
     const b=coords[base3+2];
 
     let best=0,bestD=Infinity;
-    for(let j=0;j<centers.length;j++){
-      const c=centers[j];
-      const dL=L-c[0],da=a-c[1],db=b-c[2];
+    for(let j=0;j<k;j++){
+      const cBase=j*3;
+      const dL=L-centers[cBase];
+      const da=a-centers[cBase+1];
+      const db=b-centers[cBase+2];
       const d=dL*dL+da*da+db*db;
-
       if(d<bestD){
         bestD=d;
         best=j;
@@ -12116,46 +13140,51 @@ function analyzePaletteSpatialStats(palette,features){
     }
 
     const x=xValues[p],y=yValues[p];
-    const localEdge=edgeValues?.[p]??0;
-    const s=stats[best];
+    const localEdge=edgeValues[p];
 
-    s.count++;
-    s.xSum+=x;
-    s.ySum+=y;
-    s.localEdgeSum+=localEdge;
+    counts[best]++;
+    xSums[best]+=x;
+    ySums[best]+=y;
+    localEdgeSums[best]+=localEdge;
 
-    if(localEdge>.18) s.highLocalEdgeCount++;
-    if(localEdge<.075) s.interiorCount++;
-
-    if(x>=.25&&x<=.75&&y>=.22&&y<=.78) s.centerCount++;
-    if(x<=.14||x>=.86||y<=.14||y>=.86) s.edgeCount++;
+    if(localEdge>.18) highLocalEdgeCounts[best]++;
+    if(localEdge<.075) interiorCounts[best]++;
+    if(x>=.25&&x<=.75&&y>=.22&&y<=.78) centerCounts[best]++;
+    if(x<=.14||x>=.86||y<=.14||y>=.86) edgeCounts[best]++;
 
     const gx=Math.min(gridX-1,Math.floor(x*gridX));
     const gy=Math.min(gridY-1,Math.floor(y*gridY));
-    s.cells[gy*gridX+gx]++;
+    cells[best*gridN+gy*gridX+gx]++;
   }
 
-  const assignedTotal=stats.reduce((sum,s)=>sum+s.count,0)||1;
+  let assignedTotal=0;
+  for(let j=0;j<k;j++) assignedTotal+=counts[j];
+  assignedTotal=assignedTotal||1;
+  const logGridN=Math.log(gridN);
+  const invCentroidMax=1/Math.sqrt(.5);
 
-  for(const s of stats){
-    s.color.share=s.count/assignedTotal;
-    const count=Math.max(1,s.count);
+  for(let j=0;j<k;j++){
+    const color=palette[j];
+    const rawCount=counts[j];
+    color.share=rawCount/assignedTotal;
+    const count=Math.max(1,rawCount);
 
     let entropy=0,significantCells=0;
-    for(const cellCount of s.cells){
+    const cellBase=j*gridN;
+    for(let cell=0;cell<gridN;cell++){
+      const cellCount=cells[cellBase+cell];
       if(cellCount<=0) continue;
       const p=cellCount/count;
       entropy-=p*Math.log(p);
       if(p>=.018) significantCells++;
     }
 
-    const spread=gridN>1?clamp01(entropy/Math.log(gridN)):0;
+    const spread=gridN>1?clamp01(entropy/logGridN):0;
     const coverage=clamp01(significantCells/gridN);
-    const centroidX=s.xSum/count;
-    const centroidY=s.ySum/count;
-    const centroidDistance=Math.sqrt(
-      Math.pow(centroidX-.5,2)+Math.pow(centroidY-.5,2)
-    )/Math.sqrt(.5);
+    const centroidX=xSums[j]/count;
+    const centroidY=ySums[j]/count;
+    const dx=centroidX-.5,dy=centroidY-.5;
+    const centroidDistance=Math.sqrt(dx*dx+dy*dy)*invCentroidMax;
 
     const compactness=clamp01(
       (1-spread)*.68+
@@ -12163,30 +13192,24 @@ function analyzePaletteSpatialStats(palette,features){
       (1-clamp01(centroidDistance))*.12
     );
 
-    result.set(s.color.hex,{
-      count:s.count,
+    result.set(color.hex,{
+      count:rawCount,
       spread,
       coverage,
       compactness,
-      centerPresence:clamp01(s.centerCount/count),
-      edgePresence:clamp01(s.edgeCount/count),
+      centerPresence:clamp01(centerCounts[j]/count),
+      edgePresence:clamp01(edgeCounts[j]/count),
       centroidX,
       centroidY,
-      localEdgeMean:clamp01(s.localEdgeSum/count),
-      edgePixelShare:clamp01(s.highLocalEdgeCount/count),
-      interiorShare:clamp01(s.interiorCount/count)
+      localEdgeMean:clamp01(localEdgeSums[j]/count),
+      edgePixelShare:clamp01(highLocalEdgeCounts[j]/count),
+      interiorShare:clamp01(interiorCounts[j]/count)
     });
   }
 
   palette.sort((a,b)=>b.share-a.share);
   return result;
 }
-
-/*
-  CIEDE2000 perceptual colour difference.
-  Unlike plain RGB distance / CIE76, this better reflects how people actually
-  perceive equal-sized colour differences in different hue/chroma regions.
-*/
 function deltaE2000(lab1, lab2){
   const [L1,a1,b1]=lab1;
   const [L2,a2,b2]=lab2;
@@ -13213,29 +14236,32 @@ function kmeans(features,k,iterations=16){
 
   const coords=features.okLab;
   const weights=features.clusterWeight;
-  const centers=[];
+  const centers=new Float64Array(k*3);
   const nearestD=new Float64Array(sampleCount);
   nearestD.fill(Infinity);
 
   const firstIndex=sampleIndices[Math.floor(rand()*sampleCount)];
-  centers.push([
-    coords[firstIndex*3],
-    coords[firstIndex*3+1],
-    coords[firstIndex*3+2]
-  ]);
+  centers[0]=coords[firstIndex*3];
+  centers[1]=coords[firstIndex*3+1];
+  centers[2]=coords[firstIndex*3+2];
+  let centerCount=1;
 
-  while(centers.length<k){
-    const newest=centers[centers.length-1];
+  while(centerCount<k){
+    const newestBase=(centerCount-1)*3;
+    const newest0=centers[newestBase];
+    const newest1=centers[newestBase+1];
+    const newest2=centers[newestBase+2];
     let total=0;
 
     for(let s=0;s<sampleCount;s++){
       const idx=sampleIndices[s];
-      const x=coords[idx*3],y=coords[idx*3+1],z=coords[idx*3+2];
-      const dx=x-newest[0],dy=y-newest[1],dz=z-newest[2];
+      const base3=idx*3;
+      const x=coords[base3],y=coords[base3+1],z=coords[base3+2];
+      const dx=x-newest0,dy=y-newest1,dz=z-newest2;
       const d=dx*dx+dy*dy+dz*dz;
 
       if(d<nearestD[s]) nearestD[s]=d;
-      total+=nearestD[s]*(weights?.[idx]??1);
+      total+=nearestD[s]*weights[idx];
     }
 
     if(total<=1e-14) break;
@@ -13245,7 +14271,7 @@ function kmeans(features,k,iterations=16){
 
     for(let s=0;s<sampleCount;s++){
       const idx=sampleIndices[s];
-      target-=nearestD[s]*(weights?.[idx]??1);
+      target-=nearestD[s]*weights[idx];
       if(target<=0){
         chosenPos=s;
         break;
@@ -13253,15 +14279,21 @@ function kmeans(features,k,iterations=16){
     }
 
     const idx=sampleIndices[chosenPos];
-    centers.push([
-      coords[idx*3],
-      coords[idx*3+1],
-      coords[idx*3+2]
-    ]);
+    const srcBase=idx*3;
+    const dstBase=centerCount*3;
+    centers[dstBase]=coords[srcBase];
+    centers[dstBase+1]=coords[srcBase+1];
+    centers[dstBase+2]=coords[srcBase+2];
+    centerCount++;
   }
 
-  while(centers.length<k){
-    centers.push([...centers[centers.length-1]]);
+  while(centerCount<k){
+    const srcBase=(centerCount-1)*3;
+    const dstBase=centerCount*3;
+    centers[dstBase]=centers[srcBase];
+    centers[dstBase+1]=centers[srcBase+1];
+    centers[dstBase+2]=centers[srcBase+2];
+    centerCount++;
   }
 
   const assignments=new Uint16Array(sampleCount);
@@ -13272,13 +14304,16 @@ function kmeans(features,k,iterations=16){
 
     for(let s=0;s<sampleCount;s++){
       const idx=sampleIndices[s];
-      const x=coords[idx*3],y=coords[idx*3+1],z=coords[idx*3+2];
-      const wt=weights?.[idx]??1;
+      const base3=idx*3;
+      const x=coords[base3],y=coords[base3+1],z=coords[base3+2];
+      const wt=weights[idx];
 
       let best=0,bestD=Infinity;
       for(let j=0;j<k;j++){
-        const c=centers[j];
-        const dx=x-c[0],dy=y-c[1],dz=z-c[2];
+        const cBase=j*3;
+        const dx=x-centers[cBase];
+        const dy=y-centers[cBase+1];
+        const dz=z-centers[cBase+2];
         const d=dx*dx+dy*dy+dz*dz;
         if(d<bestD){
           bestD=d;
@@ -13297,20 +14332,22 @@ function kmeans(features,k,iterations=16){
     let maxShift=0;
 
     for(let j=0;j<k;j++){
-      const base=j*4;
-      const mass=sums[base+3];
+      const sumBase=j*4;
+      const mass=sums[sumBase+3];
       if(!mass) continue;
 
-      const next=[
-        sums[base]/mass,
-        sums[base+1]/mass,
-        sums[base+2]/mass
-      ];
-
-      const c=centers[j];
-      const dx=next[0]-c[0],dy=next[1]-c[1],dz=next[2]-c[2];
-      maxShift=Math.max(maxShift,dx*dx+dy*dy+dz*dz);
-      centers[j]=next;
+      const next0=sums[sumBase]/mass;
+      const next1=sums[sumBase+1]/mass;
+      const next2=sums[sumBase+2]/mass;
+      const cBase=j*3;
+      const dx=next0-centers[cBase];
+      const dy=next1-centers[cBase+1];
+      const dz=next2-centers[cBase+2];
+      const shift=dx*dx+dy*dy+dz*dz;
+      if(shift>maxShift) maxShift=shift;
+      centers[cBase]=next0;
+      centers[cBase+1]=next1;
+      centers[cBase+2]=next2;
     }
 
     if(maxShift<5e-9) break;
@@ -13322,11 +14359,14 @@ function kmeans(features,k,iterations=16){
 
   for(let s=0;s<sampleCount;s++){
     const idx=sampleIndices[s];
-    const wt=weights?.[idx]??1;
+    const wt=weights[idx];
     const j=assignments[s];
-    const c=centers[j];
-    const x=coords[idx*3],y=coords[idx*3+1],z=coords[idx*3+2];
-    const dx=x-c[0],dy=y-c[1],dz=z-c[2];
+    const cBase=j*3;
+    const base3=idx*3;
+    const x=coords[base3],y=coords[base3+1],z=coords[base3+2];
+    const dx=x-centers[cBase];
+    const dy=y-centers[cBase+1];
+    const dz=z-centers[cBase+2];
     const d=dx*dx+dy*dy+dz*dz;
 
     mass[j]+=wt;
@@ -13334,16 +14374,21 @@ function kmeans(features,k,iterations=16){
     totalMass+=wt;
   }
 
-  return centers
-    .map((center,i)=>({
-      center:oklabToRgb(center[0],center[1],center[2]),
-      share:mass[i]/Math.max(1e-9,totalMass),
+  const result=[];
+  const totalDenom=Math.max(1e-9,totalMass);
+  for(let i=0;i<k;i++){
+    const share=mass[i]/totalDenom;
+    if(share<=.0015) continue;
+    const cBase=i*3;
+    result.push({
+      center:oklabToRgb(centers[cBase],centers[cBase+1],centers[cBase+2]),
+      share,
       dispersion:mass[i]>0?Math.sqrt(sse[i]/mass[i]):0
-    }))
-    .filter(c=>c.share>.0015)
-    .sort((a,b)=>b.share-a.share);
+    });
+  }
+  result.sort((a,b)=>b.share-a.share);
+  return result;
 }
-
 </script>
 </body>
 </html>
